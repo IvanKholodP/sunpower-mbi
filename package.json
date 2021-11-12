@@ -9,7 +9,7 @@
       "client": "npm run start --prefix client",
       "server": "nodemon ./server.js",
       "dev": "concurrently \"npm run server\" \"npm run client\"",
-      "heroku-postbuild": "cd client && npm install && npm run build",
+      "heroku-postbuild": "tsc && cd client && npm install && npm run build",
       "postinstall": "npm run tsc",
       "tsc": "tsc"
    },
