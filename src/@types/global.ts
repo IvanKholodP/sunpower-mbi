@@ -29,3 +29,21 @@ export type TApplicationTypes = {
 	year: number,
 	user: any
 };
+
+export type TGetAllApplicationsUserTypes = {
+	deliverPlaning: string,
+	goods: string,
+	sendMethod: string,
+	city: string,
+	recipientData: string,
+	payer: string,
+	commentsSales: string,
+	status: EGeneralStatus,
+	month: number,
+	year: number,
+	createAt: string,
+	updateAt: Date,
+	commentsLogist: string
+	firstName: string,
+	lastName: string
+};

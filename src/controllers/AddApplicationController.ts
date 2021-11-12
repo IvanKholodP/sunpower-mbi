@@ -20,11 +20,9 @@ export default class AddApplicationController extends GeneralController {
 		try {
 			const application = new ApplicationModel();
 			const result = await application.createApplication(req.body);
-			console.log('body:', req.body)
 			res.json({
 				data: result
 			});
-			console.log('controller', result)
 		} catch (error) {
 			res.json({data: {
 				errors: [new ErrorHandler(EResponseCodes.APP_DOES_NOT_ADD), error]}

@@ -42,6 +42,8 @@ export const AppModal: React.FC = () => {
     clearError();
   }, [error, message, clearError]);
 
+
+
   const changeHandler = (event: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>) => {
     event.preventDefault();
     const { name, value } = event.target;

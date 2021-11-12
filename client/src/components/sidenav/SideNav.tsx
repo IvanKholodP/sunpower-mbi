@@ -1,12 +1,12 @@
 import React, {useEffect, useCallback, useState, useContext} from "react";
 import { AuthContext } from "../../context/authContext";
 import { useHttp } from "../../hooks/httpHook";
-import { UserProps } from "../../interface";
+import { IUserProps } from "../../interface";
 import { Loader } from "../loader/Loader";
 import { UserData } from "../userData/UserData";
 
 export const SideNav: React.FC = () => {
-	const [user, setUser] = useState<UserProps>();
+	const [user, setUser] = useState<IUserProps>();
 	const {loading, request} = useHttp();
 	const {token} = useContext(AuthContext);
 

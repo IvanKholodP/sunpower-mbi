@@ -1,8 +1,8 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { UserProps } from "../../interface";
+import { IUserProps } from "../../interface";
 
-export const UserData: React.FC<{user: UserProps}> = ({user}) => {
+export const UserData: React.FC<{user: IUserProps}> = ({user}) => {
 	return(
 		<ul id="slide-out" className="sidenav sidenav-fixed blue-grey lighten-1" style={{paddingTop: '50px'}}>
 			<li>

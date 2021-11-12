@@ -1,6 +1,6 @@
 import moment from "moment";
 import { getRepository } from "typeorm";
-import { EGeneralStatus, EGeneralType, TApplicationTypes } from "../@types/global";
+import { EGeneralStatus, EGeneralType, TApplicationTypes, TGetAllApplicationsUserTypes } from "../@types/global";
 import { Applications } from "../entity/Applications";
 import ErrorHandler, { EResponseCodes } from "../utils/ErrorHandler";
 
@@ -23,11 +23,36 @@ export default class ApplicationModel {
 				user: args?.user?.userId,
 			})
 			const result = await application.save(appObj)
-			console.log('model:',result)
 			return {result, message: 'Заявку успішно добавлено'}
 		} catch (error) {
-			console.log('eroor:', error)
 			return new ErrorHandler(EResponseCodes.AUTH_ERROR);
 		}
+	}
+
+	async getAllApplications () {
+		const applications = getRepository(Applications);
+		const activeApp = await applications.find({where: {type: EGeneralType.ACTIVE }, relations: ["user"]});
+		const allApp: TGetAllApplicationsUserTypes[] = []
+		activeApp.forEach((item)=>{
+			allApp.push({
+				deliverPlaning: item.deliverPlaning,
+				goods: item.goods,
+				sendMethod: item.sendMethod,
+				city: item.city,
+				recipientData: item.recipientData,
+				payer: item.payer,
+				commentsSales: item.commentsSales,
+				status: item.status,
+				month: item.month,
+				year: item.year,
+				firstName: item?.user?.firstName,
+				lastName: item?.user?.lastName,
+				createAt: item.createAt,
+				updateAt: item.updateAt,
+				commentsLogist: item.commentsLogist
+			})
+		})
+	
+		return allApp;
 	}
 }

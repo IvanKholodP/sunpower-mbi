@@ -1,10 +1,10 @@
-export interface UserProps {
+export interface IUserProps {
 	firstName: string,
 	lastName: string,
 	email:string,
 }
 
-export interface ApplicationsProps {
+export interface IGetAllApp {
 	deliverPlaning: string,
 	goods: string,
 	sendMethod: string,
@@ -12,10 +12,12 @@ export interface ApplicationsProps {
 	recipientData: string,
 	payer: string,
 	commentsSales: string,
+	status: number,
 	month: number,
 	year: number,
-	commentsLogist: string,
-	status: number,
-	type: number,
-	createAt: string
+	createAt: string,
+	updateAt: Date,
+	commentsLogist: string
+	firstName: string,
+	lastName: string
 }
