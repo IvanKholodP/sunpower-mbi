@@ -26,7 +26,7 @@ export class Applications {
 	@Column()
 	payer: string;
 
-	@Column()
+	@Column({nullable: true})
 	commentsSales: string;
 
 	@Column({nullable: true})

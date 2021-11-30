@@ -80,18 +80,6 @@ export const AppModal: React.FC = () => {
             ? "Recipient Data must be at least 5 characters long!"
             : "";
         break;
-      case "payer":
-        errors.payer =
-          value.length < 5
-            ? "Payer must be at least 5 characters long!"
-            : "";
-        break;
-      case "commentsSales":
-        errors.commentsSales =
-          value.length < 8
-            ? "Comments sales must be at least 8 characters long!"
-            : "";
-        break;
       default:
         break;
     }
@@ -101,7 +89,7 @@ export const AppModal: React.FC = () => {
   const pressHandler = async () => {
       try {
         if (validateForm(form.errors) && (form.deliverPlaning.length > 0 && form.goods.length > 0 && 
-          form.sendMethod.length > 0 && form.city.length > 0 && form.recipientData.length > 0 && form.commentsSales.length > 0)) {
+          form.sendMethod.length > 0 && form.city.length > 0 && form.recipientData.length > 0 )) {
           const data = await request('/api/add_application', 'POST', {...form}, {
             Authorization: `Bearer ${auth.token}`
           })
@@ -208,9 +196,6 @@ export const AppModal: React.FC = () => {
                     <option value="recipient">Recipient</option>
                     <option value="sender">Sender</option>
                 </select>
-                {form.errors.payer.length > 0 && (
-                  <span className="error">{form.errors.payer}</span>
-                )}
               </div>
             </div>
             <div className="row">
@@ -224,9 +209,6 @@ export const AppModal: React.FC = () => {
                   onChange={changeHandler}
                 />
                 <label htmlFor="commentsSales">Comments sales</label>
-                {form.errors.commentsSales.length > 0 && (
-                  <span className="error">{form.errors.commentsSales}</span>
-                )}
               </div>
             </div>
           </form>

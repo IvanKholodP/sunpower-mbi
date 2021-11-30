@@ -19,8 +19,8 @@ const WorkerUserPage: React.FC = () => {
 	// }, [fetchLinks])
 
 	return(
-		<div  style={{marginLeft: '100px'}}>
-			<h1>Worker Page</h1>
+		<div className="col s9" style={{width: '80%'}}>
+			<h1>Тут буде інформація про співробітників компанії</h1>
 		</div>
 	)
 }

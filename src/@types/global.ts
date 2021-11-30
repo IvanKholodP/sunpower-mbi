@@ -1,11 +1,13 @@
 export enum EGeneralStatus {
 	OPEN = 1,
-	CLOSED = 0,
+	PROCESS= 2,
+	CLOSED = 3,
+	REJECT = 4,
 }
 
 export enum EGeneralType {
-	ACTIVE=1,
 	DELETED=0,
+	ACTIVE=1,
 }
 
 export interface UserProps {
@@ -31,6 +33,7 @@ export type TApplicationTypes = {
 };
 
 export type TGetAllApplicationsUserTypes = {
+	appId: number,
 	deliverPlaning: string,
 	goods: string,
 	sendMethod: string,

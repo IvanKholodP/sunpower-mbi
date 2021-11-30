@@ -18,9 +18,9 @@ const App: React.FC = () => {
   const { login, token, userId, logout, ready } = useAuth();
   const isAuthenticated: boolean = !!token;
   const routes = useRouter(isAuthenticated);
-  useEffect(() => {
-    window.M.AutoInit();
-  });
+  // useEffect(() => {
+  //   window.M.AutoInit();
+  // });
 
   if(!ready) {
     return <Loader />
@@ -29,10 +29,12 @@ const App: React.FC = () => {
     <AuthContext.Provider
       value={{ login, token, userId, logout, isAuthenticated }}>
       <Router>
-        { isAuthenticated && <SideNav /> }
         { isAuthenticated && <NavBar />}
-        <div className="container">
-          {routes}
+          <div className="row">
+          { isAuthenticated && <SideNav /> }
+          {/* <div className="col s12 m8 l9"> */}
+            {routes}
+          {/* </div> */}
         </div>
       </Router>
     </AuthContext.Provider>

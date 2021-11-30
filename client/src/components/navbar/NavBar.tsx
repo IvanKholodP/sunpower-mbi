@@ -15,20 +15,22 @@ export const NavBar: React.FC = () => {
 	};
 
 	return(
-		<nav className='navbar-fixed' style={{zIndex: 1000}}>
-			<div className="nav-wrapper green darken-4">
-				<ul id="nav-mobile" className="right hide-on-med-and-down">
-					<li>
-						<NavLink className="brand-logo" to='/'>MBI Development</NavLink>
-					</li>
-					<li>
-						<AppModal />
-					</li>
-					<li>
-						<NavLink to="/" onClick={logoutHandler}>Logout</NavLink>
-					</li>
-				</ul>
-			</div>
-		</nav>
+		<div className='navbar-fixed' style={{zIndex: 1000}}>
+			<nav className='navbar-fixed' >
+				<div className="nav-wrapper green darken-4">
+					<ul id="nav-mobile" className="right hide-on-med-and-down">
+						<li>
+							<NavLink className="brand-logo" to='/'>MBI Development</NavLink>
+						</li>
+						<li>
+							<AppModal />
+						</li>
+						<li>
+							<NavLink to="/" onClick={logoutHandler}>Logout</NavLink>
+						</li>
+					</ul>
+				</div>
+			</nav>
+		</div>
 	)
 }

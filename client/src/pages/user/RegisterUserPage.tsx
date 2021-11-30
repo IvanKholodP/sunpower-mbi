@@ -55,7 +55,7 @@ const RegisterUserPage: React.FC = () => {
 							</div>
 						</div>
 						<div className="row">
-							<div className="input-field col s12">
+							<div className="input-field col s6">
 								<input 
 									name="email"
 									id="email" 
@@ -66,9 +66,7 @@ const RegisterUserPage: React.FC = () => {
 								<label  htmlFor="email">Email</label>
 								<span className="helper-text" data-error="wrong"></span>
 							</div>
-						</div>
-						<div className="row">
-							<div className="input-field col s12">
+							<div className="input-field col s6">
 								<input 
 									name="phoneNumber"
 									id="telephone" 

@@ -16,7 +16,7 @@ export default class ApplicationModel {
 				recipientData: args.recipientData,
 				payer: args.payer,
 				commentsSales: args.commentsSales,
-				status: EGeneralStatus.OPEN,
+				status: EGeneralStatus.REJECT,
 				type: EGeneralType.ACTIVE,
 				month: Number(moment().format('MM')),
 				year: Number(moment().format('YYYY')),
@@ -30,29 +30,51 @@ export default class ApplicationModel {
 	}
 
 	async getAllApplications () {
-		const applications = getRepository(Applications);
-		const activeApp = await applications.find({where: {type: EGeneralType.ACTIVE }, relations: ["user"]});
-		const allApp: TGetAllApplicationsUserTypes[] = []
-		activeApp.forEach((item)=>{
-			allApp.push({
-				deliverPlaning: item.deliverPlaning,
-				goods: item.goods,
-				sendMethod: item.sendMethod,
-				city: item.city,
-				recipientData: item.recipientData,
-				payer: item.payer,
-				commentsSales: item.commentsSales,
-				status: item.status,
-				month: item.month,
-				year: item.year,
-				firstName: item?.user?.firstName,
-				lastName: item?.user?.lastName,
-				createAt: item.createAt,
-				updateAt: item.updateAt,
-				commentsLogist: item.commentsLogist
+		try {
+			const applications = getRepository(Applications);
+			const activeApp = await applications.find({where: {type: EGeneralType.ACTIVE }, relations: ["user"]});
+			const allApp: TGetAllApplicationsUserTypes[] = [];
+			activeApp.forEach((item)=>{
+				allApp.push({
+					appId: item.appId,
+					deliverPlaning: item.deliverPlaning,
+					goods: item.goods,
+					sendMethod: item.sendMethod,
+					city: item.city,
+					recipientData: item.recipientData,
+					payer: item.payer,
+					commentsSales: item.commentsSales,
+					status: item.status,
+					month: item.month,
+					year: item.year,
+					firstName: item?.user?.firstName,
+					lastName: item?.user?.lastName,
+					createAt: item.createAt,
+					updateAt: item.updateAt,
+					commentsLogist: item.commentsLogist
+				})
 			})
-		})
-	
-		return allApp;
+			return allApp;
+		} catch (error) {
+			return new ErrorHandler(EResponseCodes.AUTH_ERROR);
+		}
+	}
+
+	async getMyApps (args: number) {
+		try {
+			const applications = getRepository(Applications);
+			const myActiveApps = await applications.find({where: {type: EGeneralType.ACTIVE, user: args}});
+			return myActiveApps;
+		} catch (error) {
+			return new ErrorHandler(EResponseCodes.AUTH_ERROR);
+		}
+	}
+
+	async editMyApp (args) {
+		try {
+			
+		} catch (error) {
+			return new ErrorHandler(EResponseCodes.AUTH_ERROR);
+		}
 	}
 }

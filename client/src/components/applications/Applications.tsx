@@ -1,50 +1,35 @@
-import React, { useRef, useState, useEffect } from 'react';
-import ReactDOM from 'react-dom';
+import React, { useState, useEffect } from 'react';
 import moment from 'moment';
 import { IGetAllApp } from '../../interface';
 import 'materialize-css';
-
+import Helper from '../../helpers/Helper';
 
 const monthNow = (moment().month() + 1).toString();
 const yearNow = moment().year().toString();
-let list: number = 1;
-
 
 export const GetAllApplications: React.FC<{applications: IGetAllApp[]}> = ({applications}) => {
-    // window.M.AutoInit();
     const [selectedOptionMonth, setSelectedOptionMonth] = useState<String>(monthNow);
     const [selectedOptionYear, setSelectedOptionYear] = useState<String>(yearNow);
     
-    const selectChangeMonth = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        const value = event.target.value;
-        setSelectedOptionMonth(value);
-    };
+    const selectChangeMonth = (event: React.ChangeEvent<HTMLSelectElement>) => setSelectedOptionMonth(event.target.value);
+    const selectChangeYear = (event: React.ChangeEvent<HTMLSelectElement>) => setSelectedOptionYear(event.target.value);
+    const uniqeMonths: number[] = Array.from(new Set(applications.map((app) => app.month))).sort((a: number, b: number)=> {return a - b});
+    const uniqeYears: number[] = Array.from(new Set(applications.map((app: any) => app.year))).sort((a: number, b: number)=> {return a - b});
     
-    const selectChangeYear = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        const value = event.target.value;
-        setSelectedOptionYear(value);
-    };
-    const uniqeMonths: string[] = Array.from(new Set(applications.map((o) => o.month.toString())));
-    console.log(uniqeMonths);
-    const uniqeYears: number[] = Array.from(new Set(applications.map((o: any) => o.year)));
-    console.log(uniqeYears);
-    
-    useEffect(() => {
-        window.M.AutoInit();
-    });
+    // useEffect(() => {
+    //     window.M.AutoInit();
+    // });
     
 
     return (
-      <div className="row col s12">
+      <div className="col s9" style={{width: '80%'}}>
         <div className="input-field col s3">
           <select onChange={selectChangeMonth} defaultValue={moment().month() + 1}>
-            {uniqeMonths.map((month: any) => {
+            {uniqeMonths.map((month: number) => {
               return (
                 <>
                   <option value={month} >
-                    {moment()
-                      .month(month - 1)
-                      .format("MMMM")}
+                    {moment().month(month - 1).format("MMMM")}
                   </option>
                 </>
               );
@@ -54,7 +39,7 @@ export const GetAllApplications: React.FC<{applications: IGetAllApp[]}> = ({appl
         </div>
         <div className="input-field col s3">
           <select onChange={selectChangeYear} defaultValue={moment().year()}>
-            {uniqeYears.map((year: any) => {
+            {uniqeYears.map((year: number) => {
               return (
                 <>
                   <option value={year}>
@@ -70,27 +55,34 @@ export const GetAllApplications: React.FC<{applications: IGetAllApp[]}> = ({appl
         <table>
           <thead>
             <tr>
-              <th>Num</th>
-              <th>Name</th>
-              <th>Position</th>
-              <th>Month</th>
-              <th>Year</th>
+              <th>Comments Logist</th>
+              <th>Create App</th>
+              <th>deliverPlaning</th>
+              <th>Manager</th>
+              <th>Goods</th>
+              <th>Send Method</th>
+              <th>City</th>
+              <th>Recipient Data</th>
+              <th>Payer</th>
+              <th>Comments Sales</th>
             </tr>
           </thead>
           {}
           <tbody>
-            {applications.map((app: IGetAllApp, i) => {
-              if (
-                selectedOptionMonth === app.month.toString() &&
-                selectedOptionYear === app.year.toString()
-              ) {
+            {applications.map((app: IGetAllApp) => {
+              if (selectedOptionMonth === app.month.toString() && selectedOptionYear === app.year.toString()) {
                 return (
-                  <tr key={Math.random()}>
-                    <td>{list++}</td>
-                    <td>{app.firstName}</td>
-                    <td>{app.recipientData}</td>
+                  <tr key={app.appId} >
+                    <td style={{backgroundColor: Helper.setAppStatusColor(app.status)}}>{app.commentsLogist}</td>
+                    <td>{moment.utc(app.createAt).add(2, 'hours').format('YYYY-MM-DD HH:mm:ss')}</td>
+                    <td>{app.deliverPlaning}</td>
+                    <td>{`${app.firstName} ${app.lastName}`}</td>
+                    <td>{app.goods}</td>
                     <td>{app.sendMethod}</td>
-                    <td>{app.lastName}</td>
+                    <td>{app.city}</td>
+                    <td>{app.recipientData}</td>
+                    <td>{app.payer}</td>
+                    <td>{app.commentsSales}</td>
                   </tr>
                 );
               } else {
@@ -100,6 +92,6 @@ export const GetAllApplications: React.FC<{applications: IGetAllApp[]}> = ({appl
           </tbody>
         </table>
       </div>
-      </div>
-    )
+    </div>
+  )
 }

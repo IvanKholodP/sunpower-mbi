@@ -5,12 +5,14 @@ import HomeUserPage from "./pages/user/HomeUserPage";
 import RegisterUserPage from "./pages/user/RegisterUserPage";
 import WorkerUserPage from "./pages/user/WorkerUserPage";
 import ApplicationsUserPage from "./pages/user/ApplicationsUserPage"
+import MyAppsUserPage from "./pages/user/MyAppsUserPage";
 
 export const useRouter = (isAuthentication: boolean) => {
 	if(isAuthentication){
 		return(
 			<Switch>
 				<Route exact path ='/' component={HomeUserPage} />
+				<Route path='/myapps' component={MyAppsUserPage} />
 				<Route  path='/workers' component={WorkerUserPage} />
 				<Route  path='/applications' component={ApplicationsUserPage} />
 				<Redirect to='/' />
