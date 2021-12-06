@@ -21,7 +21,7 @@ export const AppModal: React.FC = () => {
     sendMethod: '',
     city: '',
     recipientData: '',
-    payer: 'recipient',
+    payer: 'Отримувач',
     commentsSales: '',
     errors: {
       deliverPlaning: '',
@@ -193,8 +193,8 @@ export const AppModal: React.FC = () => {
                   className="validate sky-input"
                   value={form.payer}
                   onChange={changeHandler}>
-                    <option value="recipient">Recipient</option>
-                    <option value="sender">Sender</option>
+                    <option value="Отримувач">Отримувач</option>
+                    <option value="Відправник">Відправник</option>
                 </select>
               </div>
             </div>

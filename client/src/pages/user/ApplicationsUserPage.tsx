@@ -1,5 +1,4 @@
 import React, { useCallback, useContext, useState, useEffect } from "react";
-// import { GetAllApplications } from "../../components/applications/Applications";
 import { Loader } from "../../components/loader/Loader";
 import { AuthContext } from "../../context/authContext";
 import { useHttp } from "../../hooks/httpHook";
@@ -36,8 +35,14 @@ const ApplicationsUserPage: React.FC = () => {
 	}, [request, token]);
 
 	useEffect(() => {
+    	window.M.AutoInit();
+	});
+
+	useEffect(() => {
 		fetchApplications([])
 	}, [fetchApplications])
+
+
 
 	if(loading){
 		return <Loader />
@@ -46,11 +51,11 @@ const ApplicationsUserPage: React.FC = () => {
 	return(
 		<div className="col s9" style={{width: '80%'}}>
 		<div className="input-field col s3">
-			<select onChange={selectChangeMonth} defaultValue={moment().month() + 1}>
+			<select onChange={selectChangeMonth} defaultValue={monthNow}>
 				{uniqeMonths.map((month: number) => {
 					return (
 						<>
-							<option value={month} >
+							<option value={month.toString()} >
 								{moment().month(month - 1).format("MMMM")}
 							</option>
 						</>
@@ -60,7 +65,7 @@ const ApplicationsUserPage: React.FC = () => {
 			<label>Choose the Month</label>
 			</div>
 			<div className="input-field col s3">
-				<select onChange={selectChangeYear} defaultValue={moment().year()}>
+				<select onChange={selectChangeYear} defaultValue={yearNow}>
 					{uniqeYears.map((year: number) => {
 						return (
 							<>

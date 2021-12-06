@@ -18,9 +18,9 @@ const App: React.FC = () => {
   const { login, token, userId, logout, ready } = useAuth();
   const isAuthenticated: boolean = !!token;
   const routes = useRouter(isAuthenticated);
-  // useEffect(() => {
-  //   window.M.AutoInit();
-  // });
+  useEffect(() => {
+    window.M.AutoInit();
+   });
 
   if(!ready) {
     return <Loader />
