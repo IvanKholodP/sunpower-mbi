@@ -52,3 +52,15 @@ export type TGetAllApplicationsUserTypes = {
 	firstName: string,
 	lastName: string
 };
+
+export type TEditMyAppTypes = {
+	appId: number,
+	deliverPlaning: string,
+	goods: string,
+	sendMethod: string,
+	city: string,
+	recipientData: string,
+	payer: string,
+	commentsSales: string,
+	updateAt: Date,
+};

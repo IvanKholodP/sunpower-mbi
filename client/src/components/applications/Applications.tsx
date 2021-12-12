@@ -24,7 +24,7 @@ export const GetAllApplications: React.FC<{applications: IGetAllApp[]}> = ({appl
     return (
       <div className="col s9" style={{width: '80%'}}>
         <div className="input-field col s3">
-          <select onChange={selectChangeMonth} defaultValue={moment().month() + 1}>
+          <select onChange={selectChangeMonth} defaultValue={monthNow}>
             {uniqeMonths.map((month: number) => {
               return (
                 <>

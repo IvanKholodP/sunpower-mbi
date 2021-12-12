@@ -7,6 +7,7 @@ import AuthUserController from "./src/controllers/AuthUserController";
 import GetApplicationsController from './src/controllers/GetApplicationsController';
 import GetMyAppsController from './src/controllers/GetMyAppsController';
 import GetUserController from "./src/controllers/GetUserController";
+import PutMyAppController from './src/controllers/PutMyAppController';
 import RegistrationUser from "./src/controllers/RegistrationUserController";
 import Telegram from './telegram';
 
@@ -22,7 +23,9 @@ function init() {
 		new GetUserController(),
 		new AddApplicationController(),
 		new GetApplicationsController(),
-		new GetMyAppsController()
+		new GetMyAppsController(),
+
+		new PutMyAppController()
 	]);
 
 	app.listen();

@@ -1,7 +1,7 @@
 import moment from "moment";
 import { getRepository } from "typeorm";
 import Telegram from "../../telegram";
-import { EGeneralStatus, EGeneralType, TApplicationTypes, TGetAllApplicationsUserTypes } from "../@types/global";
+import { EGeneralStatus, EGeneralType, TApplicationTypes, TEditMyAppTypes, TGetAllApplicationsUserTypes } from "../@types/global";
 import { Applications } from "../entity/Applications";
 import { User } from "../entity/User";
 import ErrorHandler, { EResponseCodes } from "../utils/ErrorHandler";
@@ -90,9 +90,19 @@ export default class ApplicationModel {
 		}
 	}
 
-	async editMyApp (args) {
+	async editMyApp (args: TEditMyAppTypes) {
 		try {
-			
+			const application = getRepository(Applications);
+			const newApp = await application.findOne({where: {appId: args.appId}})
+			newApp.deliverPlaning = args.deliverPlaning;
+			newApp.goods = args.goods;
+			newApp.sendMethod = args.sendMethod;
+			newApp.city = args.city;
+			newApp.recipientData = args.recipientData;
+			newApp.payer = args.payer;
+			newApp.updateAt = args.updateAt;
+			const result = await application.save(newApp);
+			return {result, message: 'Заявку успішно змінено'}
 		} catch (error) {
 			return new ErrorHandler(EResponseCodes.AUTH_ERROR);
 		}
