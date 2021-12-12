@@ -1,7 +1,9 @@
 import moment from "moment";
 import { getRepository } from "typeorm";
+import Telegram from "../../telegram";
 import { EGeneralStatus, EGeneralType, TApplicationTypes, TEditMyAppTypes, TGetAllApplicationsUserTypes } from "../@types/global";
 import { Applications } from "../entity/Applications";
+import { User } from "../entity/User";
 import ErrorHandler, { EResponseCodes } from "../utils/ErrorHandler";
 
 export default class ApplicationModel {
@@ -21,8 +23,26 @@ export default class ApplicationModel {
 				month: Number(moment().format('MM')),
 				year: Number(moment().format('YYYY')),
 				user: args?.user?.userId,
-			})
-			const result = await application.save(appObj)
+			});
+			const result = await application.save(appObj);
+			const telegraf = new Telegram();
+			const UserRepository = getRepository(User);
+			const managerBotId = await UserRepository.findOne({userId: args.user.userId});
+			const botTextMessage = `
+				Створено нову заявку:
+				Дата доставки: ${args.deliverPlaning}
+				Вантаж: ${args.goods}
+				Спосіб доставки: ${args.sendMethod}
+				Адреса отримувача: ${args.city}
+				Дані отримаувача: ${args.recipientData}
+				Платник: ${args.payer}
+				Коментар менеджера: ${args.commentsSales}
+			`;
+			telegraf.bot.telegram.sendMessage(process.env.ADMIN_BOT_ID, botTextMessage);
+			console.log(managerBotId)
+			if(managerBotId.botId){
+				telegraf.bot.telegram.sendMessage(managerBotId.botId, botTextMessage);
+			}
 			return {result, message: 'Заявку успішно добавлено'}
 		} catch (error) {
 			return new ErrorHandler(EResponseCodes.AUTH_ERROR);

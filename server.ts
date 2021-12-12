@@ -9,8 +9,12 @@ import GetMyAppsController from './src/controllers/GetMyAppsController';
 import GetUserController from "./src/controllers/GetUserController";
 import PutMyAppController from './src/controllers/PutMyAppController';
 import RegistrationUser from "./src/controllers/RegistrationUserController";
+import Telegram from './telegram';
+
+
 
 function init() {
+	const bot = new Telegram()
 	const app = new App([
 		new RegistrationUser(),
 		new AuthUserController(),
@@ -25,6 +29,10 @@ function init() {
 	]);
 
 	app.listen();
+	bot.launch();
+
+	process.once("SIGINT", () =>  bot.bot.stop("SIGINT"));
+	process.once("SIGTERM", () => bot.bot.stop("SIGTERM"));
 
 	process.on('SIGINT', () => {
 		console.log('\nGracefully shutting down from SIGINT (Ctrl-C)');
