@@ -1,6 +1,5 @@
 import {Router, Request, Response} from 'express';
 import RegistrationModel from '../models/RegistrationModel';
-import ErrorHandler, { EResponseCodes } from '../utils/ErrorHandler';
 import GeneralController from './GeneralController';
 
 class RegistrationUserController extends GeneralController{
