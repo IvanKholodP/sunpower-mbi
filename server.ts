@@ -4,6 +4,7 @@ import App from "./app";
 import AddApplicationController from './src/controllers/AddApplicationController';
 import AddWorkerController from "./src/controllers/AddWorkerController";
 import AuthUserController from "./src/controllers/AuthUserController";
+import DeleteMyAppController from './src/controllers/DeleteMyAppController';
 import GetApplicationsController from './src/controllers/GetApplicationsController';
 import GetMyAppsController from './src/controllers/GetMyAppsController';
 import GetUserController from "./src/controllers/GetUserController";
@@ -21,7 +22,9 @@ function init() {
 		new GetApplicationsController(),
 		new GetMyAppsController(),
 
-		new PutMyAppController()
+		new PutMyAppController(),
+
+		new DeleteMyAppController(),
 	]);
 
 	app.listen();

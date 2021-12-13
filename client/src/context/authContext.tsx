@@ -6,6 +6,7 @@ interface IContext {
     login(jwt: string, id: string): void,
     logout(): void,
     isAuthenticated: boolean,
+    admin: boolean,
 }
 
 export const AuthContext: React.Context<IContext> = createContext<IContext>({
@@ -14,4 +15,5 @@ export const AuthContext: React.Context<IContext> = createContext<IContext>({
     login:(token: string, id: string) => {},
     logout:() => {},
     isAuthenticated: false,
+    admin: false,
 });

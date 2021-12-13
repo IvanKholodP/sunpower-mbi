@@ -7,6 +7,7 @@ export const useAuth = () => {
 	const [token, setToken] = useState(null);
 	const [userId, setUserId] = useState(null);
 	const [ready, setReady] = useState(false);
+	const [admin, setAdmin] = useState(false);
 
 
 	const login = useCallback((jwt, id) => {
@@ -18,6 +19,7 @@ export const useAuth = () => {
 	const logout = useCallback(()=> {
 		setToken(null);
 		setUserId(null);
+		setAdmin(false);
 		myStorage.removeItem(storage);
 	}, []);
 
@@ -29,5 +31,5 @@ export const useAuth = () => {
 		setReady(true);
 	}, [login]);
 
-	return {login, logout, token, userId, ready}
+	return {login, logout, token, userId, ready, admin}
 }

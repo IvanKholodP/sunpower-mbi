@@ -6,8 +6,17 @@ import RegisterUserPage from "./pages/user/RegisterUserPage";
 import WorkerUserPage from "./pages/user/WorkerUserPage";
 import ApplicationsUserPage from "./pages/user/ApplicationsUserPage"
 import MyAppsUserPage from "./pages/user/MyAppsUserPage";
+import DashboardAdminPage from "./pages/admin/DashbordAdminPage";
 
-export const useRouter = (isAuthentication: boolean) => {
+export const useRouter = (isAuthentication: boolean, admin: boolean) => {
+	if (isAuthentication && admin) {
+		return(
+			<Switch>
+				<Route exact path="dashboard" component={DashboardAdminPage} />
+				<Redirect to='/'/>
+			</Switch>
+		)
+	}
 	if(isAuthentication){
 		return(
 			<Switch>

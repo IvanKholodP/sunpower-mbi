@@ -20,7 +20,7 @@ class RegistrationUserController extends GeneralController{
 		try {
 			const user = new RegistrationModel();
 			const result = await user.createUser(req.body);
-			res.send(result);
+			res.json(result);
 		}catch(error){
 			res.json({message: error.message});
 		}

@@ -1,8 +1,8 @@
 import React from "react";
 
-export const EditMyApp: React.FC<{editFormData: any, handleEditFormChange: any}> = ({editFormData, handleEditFormChange}) => {
+export const EditMyApp: React.FC<{editFormData: any, handleEditFormChange: any, handleCancelClick: any}> = ({editFormData, handleEditFormChange, handleCancelClick}) => {
 	return(
-		<tr>
+		<tr key={editFormData.appId} >
 			<td>
 				<span>{editFormData.appId}</span>
 			</td>
@@ -71,6 +71,13 @@ export const EditMyApp: React.FC<{editFormData: any, handleEditFormChange: any}>
 					type="submit" 
 					className="btn">
 						Зберегти
+				</button>
+				<button
+					type="button"
+					className="btn"
+					onClick={handleCancelClick}
+				>
+					Назад
 				</button>
 			</td>
 		</tr>

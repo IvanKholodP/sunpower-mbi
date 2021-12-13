@@ -8,10 +8,11 @@ import moment from "moment";
 import { EditMyApp } from "../../components/editMyApp/EditMyApp";
 import { useMessage } from "../../hooks/messageHook";
 
-
-
 const monthNow = (moment().month() + 1).toString();
+console.log(monthNow)
 const yearNow = moment().year().toString();
+
+declare let confirm: (question: string) => boolean;
 
 const MyAppsUserPage: React.FC = () => {
 	const auth = useContext(AuthContext);
@@ -20,22 +21,13 @@ const MyAppsUserPage: React.FC = () => {
 	const [selectedOptionMonth, setSelectedOptionMonth] = useState<String>(monthNow);
 	const [selectedOptionYear, setSelectedOptionYear] = useState<String>(yearNow);
 	const [editFormData, setEditFormData] = useState({
-		deliverPlaning: '',
-		goods: '',
-		sendMethod: '',
-		city: '',
-		recipientData: '',
-		payer: '',
-		commentsSales: '',
-		updateAt: '',
-		year: '',
-		month: ''
+		deliverPlaning: '', goods: '', sendMethod: '', city: '', recipientData: '', payer: '', commentsSales: '', updateAt: '', year: '', month: ''
 	  });
 	const [editAppId, setEditAppId] = useState(null);  
 	const {loading, request} = useHttp();
 	const {token} = useContext(AuthContext);
 
-	const fetcMyApps = useCallback(async ([]) => {
+	const fetcMyApps = useCallback(async () => {
 		try {
 			const fetched = await request('/api/myapps', 'GET', null, {
 				Authorization: `Bearer ${token}`
@@ -45,24 +37,26 @@ const MyAppsUserPage: React.FC = () => {
 		}, [request, token]);
 
 	useEffect(() => {
-		window.M.AutoInit();
-	});
-		
-	useEffect(() => {
-		fetcMyApps([])
+		fetcMyApps()
 	}, [fetcMyApps])
 
-
-
-	
-	const selectChangeMonth = (event: React.ChangeEvent<HTMLSelectElement>) => setSelectedOptionMonth(event.target.value);
-	const selectChangeYear = (event: React.ChangeEvent<HTMLSelectElement>) => setSelectedOptionYear(event.target.value);
 	const uniqeMonths: number[] = Array.from(new Set(apps.map((app) => app.month))).sort((a: number, b: number)=> {return a - b});
 	const uniqeYears: number[] = Array.from(new Set(apps.map((app) => app.year))).sort((a: number, b: number)=> {return a - b});
-	console.log(uniqeMonths);
-	console.log(uniqeYears);
 
-	const handleEditClick = (event: any, app: any) => {
+	
+	const selectChangeMonth = (event: React.ChangeEvent<HTMLSelectElement>) => {
+		//event.preventDefault()
+		setSelectedOptionMonth(event.target.value);
+		console.log(event.target.value)
+	} 
+
+	const selectChangeYear = (event: React.ChangeEvent<HTMLSelectElement>) => {
+		// event.preventDefault()
+		setSelectedOptionYear(event.target.value);
+		console.log(event.target.value)
+	}
+
+	const handleEditClick = (event: React.FormEvent<HTMLFormElement>, app: any) => {
 		event.preventDefault();
 		setEditAppId(app.appId);
 	
@@ -83,13 +77,13 @@ const MyAppsUserPage: React.FC = () => {
 	  };
 
 
-	const handleEditFormChange = (event: any) => {
+	const handleEditFormChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		event.preventDefault();
 		setEditFormData({ ...editFormData,[event.target.name]: event.target.value });
 	  };
 
 
-	const handleEditFormSubmit = async (event: any) => {
+	const handleEditFormSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 	
 		const editedApp: any = {
@@ -108,7 +102,7 @@ const MyAppsUserPage: React.FC = () => {
 	
 		const newApps = [...apps];
 	
-		const index = apps.findIndex((app: any) => app.appId === editAppId);
+		const index = apps.findIndex((app: IGetMyApps) => app.appId === editAppId);
 		newApps[index] = editedApp;
 	
 		setApps(newApps);
@@ -123,8 +117,34 @@ const MyAppsUserPage: React.FC = () => {
 			console.log(error)
 		}
 	};
-	
 
+	const handleCancelClick = () => {
+		setEditAppId(null)
+	}
+
+	const handleDeleteClick = async (event: React.FormEvent<HTMLFormElement>, deleteAppId) => {
+		event.preventDefault();
+		try {
+			if (deleteAppId.status > 1) {
+				message('Заявку в процесі не можливо видалити')
+			} else {
+					const shoudRemove = confirm('Ви дійсно хочете видалити дану заявку?')
+					if (shoudRemove) {
+					const data = await request('/api/delete_myApp', 'PUT', {...deleteAppId}, {
+						Authorization: `Bearer ${auth.token}`
+					});
+					message(data.message);
+				}
+			}
+		} catch (error) {
+			console.log(error)
+		}
+	}
+
+	useEffect(() => {
+		window.M.AutoInit();
+	});
+	
 	if(loading){
 		return <Loader />
 	}
@@ -132,10 +152,10 @@ const MyAppsUserPage: React.FC = () => {
 	return(
 		<div className="col s9" style={{width: '80%'}}>
 			<div className="input-field col s3">
-				<select onChange={selectChangeMonth} defaultValue={moment().month() + 1}>
+				<select defaultValue={monthNow} onChange={selectChangeMonth} >
 					{uniqeMonths.map((month: number) => {
 						return (
-							<option value={month} >
+							<option value={month}>
 								{moment().month(month - 1).format("MMMM")}
 							</option>
 						);
@@ -144,7 +164,7 @@ const MyAppsUserPage: React.FC = () => {
 				<label>Choose the Month</label>
 			</div>
 			<div className="input-field col s3">
-				<select onChange={selectChangeYear} defaultValue={moment().year()}>
+				<select defaultValue={yearNow} onChange={selectChangeYear}>
 					{uniqeYears.map((year: number) => {
 						return (
 							<>
@@ -173,25 +193,27 @@ const MyAppsUserPage: React.FC = () => {
 							</tr>
 						</thead>
 						<tbody>
-							{apps.map((app: any) => {
-								if (selectedOptionMonth === app.month+'' && selectedOptionYear === app.year+'') {
+							{apps.map((app: IGetMyApps) => {
+								if (selectedOptionMonth === app.month + '' && selectedOptionYear === app.year + '') {
+									console.log(app.year)
 									return (
 										<Fragment>
-											{editAppId === app.appId && app.status === 1 ? 
-												(<EditMyApp 
+											{editAppId === app.appId && app.status === 1? 
+												(<EditMyApp
 													editFormData={editFormData} 
-													handleEditFormChange={handleEditFormChange} 
+													handleEditFormChange={handleEditFormChange}
+													handleCancelClick={handleCancelClick}
 												/>
 													) : (
 												<TableComponent 
 													app={app} 
 													key={app.appId} 
-													handleEditClick={handleEditClick}/>
+													handleEditClick={handleEditClick}
+													handleDeleteClick={handleDeleteClick}
+												/>
 												)
 											}
-											
 										</Fragment>
-										
 									);
 								} else {
 									return <></>

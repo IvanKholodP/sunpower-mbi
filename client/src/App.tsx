@@ -15,9 +15,9 @@ declare global {
 }
 
 const App: React.FC = () => {
-  const { login, token, userId, logout, ready } = useAuth();
+  const { login, token, userId, logout, ready, admin } = useAuth();
   const isAuthenticated: boolean = !!token;
-  const routes = useRouter(isAuthenticated);
+  const routes = useRouter(isAuthenticated, admin );
   useEffect(() => {
     window.M.AutoInit();
    });
@@ -27,7 +27,7 @@ const App: React.FC = () => {
   }
   return (
     <AuthContext.Provider
-      value={{ login, token, userId, logout, isAuthenticated }}>
+      value={{ login, token, userId, logout, isAuthenticated, admin }}>
       <Router>
         { isAuthenticated && <NavBar />}
           <div className="row">

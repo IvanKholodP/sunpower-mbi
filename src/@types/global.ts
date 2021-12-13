@@ -62,3 +62,20 @@ export type TEditMyAppTypes = {
 	commentsSales: string,
 	updateAt: Date,
 };
+
+
+export type TDeleteMyAppTypes = {
+	appId: number,
+	type: EGeneralType,
+	status: EGeneralStatus,
+	updateAt: Date,
+};
+
+export type TCreateAdminTypes = {
+	adminId: number,
+	firstName: string,
+	lastName: string,
+	password: string,
+	retryPassword: string,
+	phoneNumber: string,
+};

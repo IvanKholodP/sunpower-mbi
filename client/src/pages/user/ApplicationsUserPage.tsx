@@ -34,13 +34,14 @@ const ApplicationsUserPage: React.FC = () => {
 		} catch (error) {}
 	}, [request, token]);
 
-	useEffect(() => {
-    	window.M.AutoInit();
-	});
 
 	useEffect(() => {
 		fetchApplications([])
 	}, [fetchApplications])
+
+	useEffect(() => {
+    	window.M.AutoInit();
+	}, [uniqeMonths]);
 
 
 
@@ -50,79 +51,75 @@ const ApplicationsUserPage: React.FC = () => {
 
 	return(
 		<div className="col s9" style={{width: '80%'}}>
-		<div className="input-field col s3">
-			<select onChange={selectChangeMonth} defaultValue={monthNow}>
-				{uniqeMonths.map((month: number) => {
-					return (
-						<>
-							<option value={month.toString()} >
-								{moment().month(month - 1).format("MMMM")}
-							</option>
-						</>
-					);
-				})}
-			</select>
-			<label>Choose the Month</label>
-			</div>
 			<div className="input-field col s3">
-				<select onChange={selectChangeYear} defaultValue={yearNow}>
-					{uniqeYears.map((year: number) => {
+				<select onChange={selectChangeMonth} defaultValue={monthNow}>
+					{uniqeMonths.map((month: number) => {
 						return (
 							<>
-								<option value={year}>
-									{year}
+								<option value={month.toString()} >
+									{moment().month(month - 1).format("MMMM")}
 								</option>
 							</>
 						);
 					})}
 				</select>
-				<label>Choose one Year</label>
+				<label>Choose the Month</label>
 			</div>
-		<div>
-			<table>
-				<thead>
-					<tr>
-						<th>Comments Logist</th>
-						<th>Create App</th>
-						<th>deliverPlaning</th>
-						<th>Manager</th>
-						<th>Goods</th>
-						<th>Send Method</th>
-						<th>City</th>
-						<th>Recipient Data</th>
-						<th>Payer</th>
-						<th>Comments Sales</th>
-					</tr>
-				</thead>
-				<tbody>
-					{applications.map((app: IGetAllApp) => {
-						if (selectedOptionMonth === app.month.toString() && selectedOptionYear === app.year.toString()) {
+				<div className="input-field col s3">
+					<select onChange={selectChangeYear} defaultValue={yearNow}>
+						{uniqeYears.map((year: number) => {
 							return (
-								<tr key={app.appId} >
-									<td style={{backgroundColor: Helper.setAppStatusColor(app.status)}}>{app.appId}</td>
-									<td>{moment.utc(app.createAt).add(2, 'hours').format('YYYY-MM-DD HH:mm:ss')}</td>
-									<td>{app.deliverPlaning}</td>
-									<td>{`${app.firstName} ${app.lastName}`}</td>
-									<td>{app.goods}</td>
-									<td>{app.sendMethod}</td>
-									<td>{app.city}</td>
-									<td>{app.recipientData}</td>
-									<td>{app.payer}</td>
-									<td>{app.commentsSales}</td>
-								</tr>
+								<>
+									<option value={year}>
+										{year}
+									</option>
+								</>
 							);
-						} else {
-							return <></>;
-						}
-					})}
-				</tbody>
-			</table>
+						})}
+					</select>
+					<label>Choose one Year</label>
+				</div>
+			<div>
+				<table>
+					<thead>
+						<tr>
+							<th>Comments Logist</th>
+							<th>Create App</th>
+							<th>deliverPlaning</th>
+							<th>Manager</th>
+							<th>Goods</th>
+							<th>Send Method</th>
+							<th>City</th>
+							<th>Recipient Data</th>
+							<th>Payer</th>
+							<th>Comments Sales</th>
+						</tr>
+					</thead>
+					<tbody>
+						{applications.map((app: IGetAllApp) => {
+							if (selectedOptionMonth === app.month.toString() && selectedOptionYear === app.year.toString()) {
+								return (
+									<tr key={app.appId} >
+										<td style={{backgroundColor: Helper.setAppStatusColor(app.status)}}>{app.appId}</td>
+										<td>{moment.utc(app.createAt).add(2, 'hours').format('YYYY-MM-DD HH:mm:ss')}</td>
+										<td>{app.deliverPlaning}</td>
+										<td>{`${app.firstName} ${app.lastName}`}</td>
+										<td>{app.goods}</td>
+										<td>{app.sendMethod}</td>
+										<td>{app.city}</td>
+										<td>{app.recipientData}</td>
+										<td>{app.payer}</td>
+										<td>{app.commentsSales}</td>
+									</tr>
+								);
+							} else {
+								return <></>;
+							}
+						})}
+					</tbody>
+				</table>
+			</div>
 		</div>
-	</div>
-
-		// <>
-		// 	{!loading && applications && <GetAllApplications applications={applications} />}
-		// </>
 	)
 }
 

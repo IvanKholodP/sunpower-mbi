@@ -1,6 +1,6 @@
 import moment from "moment";
 import { getRepository } from "typeorm";
-import { EGeneralStatus, EGeneralType, TApplicationTypes, TEditMyAppTypes, TGetAllApplicationsUserTypes } from "../@types/global";
+import { EGeneralStatus, EGeneralType, TApplicationTypes, TDeleteMyAppTypes, TEditMyAppTypes, TGetAllApplicationsUserTypes } from "../@types/global";
 import { Applications } from "../entity/Applications";
 import ErrorHandler, { EResponseCodes } from "../utils/ErrorHandler";
 
@@ -16,7 +16,7 @@ export default class ApplicationModel {
 				recipientData: args.recipientData,
 				payer: args.payer,
 				commentsSales: args.commentsSales,
-				status: EGeneralStatus.REJECT,
+				status: EGeneralStatus.OPEN,
 				type: EGeneralType.ACTIVE,
 				month: Number(moment().format('MM')),
 				year: Number(moment().format('YYYY')),
@@ -83,6 +83,22 @@ export default class ApplicationModel {
 			newApp.updateAt = args.updateAt;
 			const result = await application.save(newApp);
 			return {result, message: 'Заявку успішно змінено'}
+		} catch (error) {
+			return new ErrorHandler(EResponseCodes.AUTH_ERROR);
+		}
+	}
+
+	async deleteMyApp (args: TDeleteMyAppTypes) {
+		try {
+			const application = getRepository(Applications);
+			const newApp = await application.findOne({where: {appId: args.appId}})
+			if (args.status != EGeneralStatus.OPEN){
+				return {message: 'Заявку не можливо видалити'}
+			}
+			newApp.updateAt = args.updateAt;
+			newApp.type = EGeneralType.DELETED;
+			const result = await application.save(newApp);
+			return {result, message: 'Заявку успішно видалено'}
 		} catch (error) {
 			return new ErrorHandler(EResponseCodes.AUTH_ERROR);
 		}
