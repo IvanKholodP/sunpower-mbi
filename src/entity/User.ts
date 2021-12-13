@@ -35,6 +35,12 @@ export class User{
     @IsMobilePhone()
     phoneNumber: string;
 
+    @Column({
+        nullable: true,
+        type: 'bigint'
+    })
+    botId: number
+
     @CreateDateColumn({type: 'timestamp with time zone'})
     createAt?: Date;
 

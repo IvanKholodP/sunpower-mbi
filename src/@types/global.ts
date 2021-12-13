@@ -10,11 +10,13 @@ export enum EGeneralType {
 	ACTIVE=1,
 }
 
-export interface UserProps {
+export interface IUserRegistrationProps {
 	firstName: string,
 	lastName: string,
 	email:string,
 	phoneNumber: string,
+	password: string,
+	retryPassword: string
 };
 
 export type TApplicationTypes = {
