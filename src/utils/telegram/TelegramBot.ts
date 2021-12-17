@@ -4,6 +4,7 @@ import fetch from 'node-fetch';
 import { getRepository } from "typeorm";
 import { User } from "../../entity/User";
 import ErrorHandler from "../ErrorHandler";
+import { Admin } from "../../entity/Admin";
 
 class TelegramBot {
 	async botStart (ctx: Context) {
@@ -22,15 +23,23 @@ class TelegramBot {
 
 	async getContact (ctx) {
 		try {
+			const user = getRepository(User);
+			const admin = getRepository(Admin);
+			const candidat: User = await user.findOne({phoneNumber: ctx.message.contact.phone_number})
+			const administrator: Admin = await admin.findOne({phoneNumber: ctx.message.contact.phone_number})
+			if (candidat) {
+				candidat.botId = ctx.message.contact.user_id;
+				await user.save(candidat);
+			}
+			if (administrator) {
+				administrator.botId = ctx.message.contact.user_id;
+				await admin.save(administrator);
+			}
 			await ctx.reply(`
 				Привіт, ${ctx.from.first_name}!
 				Я твій помічник для роботи.
 				Щоб дізнатись про мої команди, натисни /help або скористайся меню.
 			`);
-			const user = getRepository(User);
-			const candidat: User = await user.findOne({phoneNumber: ctx.message.contact.phone_number})
-			candidat.botId = ctx.message.contact.user_id;
-			await user.save(candidat);
 		} catch (error) {
 			console.error(error);
 		}
@@ -66,30 +75,6 @@ class TelegramBot {
 	async notExist(ctx: Context) {
 		try {
 			await ctx.reply("Даної команди не існує");
-		} catch (error) {
-			console.error(error);
-		}
-	}
-
-	async registerNewUserData(args) {
-		try {
-			const botTextMessage = `
-				Зареєстровано нового користувача:		
-				Ім'я: ${args.firstName}		
-				Прізвище: ${args.lastName}		
-				Номер мобільного: ${args.phoneNumber}		
-				Електронна пошта: ${args.email}		
-				`;
-			return botTextMessage;
-		} catch (error) {
-			console.error(error);
-		}
-	}
-	async registerNewUser(ctx: Context) {
-		try {
-			let bot;
-			const data = await this.registerNewUserData(bot)
-			console.log(data)
 		} catch (error) {
 			console.error(error);
 		}

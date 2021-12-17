@@ -41,50 +41,52 @@ const AuthUserPage: React.FC = () => {
 
 
 	return(
-		<div className="row">
-			<div className="col s6 offset-s3">
-				<div className="card teal darken-2">
-					<div className="card-content white-text center">
-						<span className="card-title">Authorization</span>
-						<div className="row">
-							<div className="input-field col s12">
-								<input 
-									name="email"
-									id="email" 
-									type="email" 
-									className="validate"
-									onChange={changeHandler}
-								/>
-								<label  htmlFor="email">Email</label>
-								<span className="helper-text" data-error="wrong"></span>
+		<>
+			<a href="/admin"><span style={{width:'20px', height:'20px', position: 'fixed', cursor: "default"}}></span></a>
+			<div className="row">
+				<div className="col s6 offset-s3">
+					<div className="card teal darken-2">
+						<div className="card-content white-text center">
+							<span className="card-title">Authorization</span>
+							<div className="row">
+								<div className="input-field col s12">
+									<input 
+										name="email"
+										id="email" 
+										type="email" 
+										className="validate"
+										onChange={changeHandler}
+									/>
+									<label  htmlFor="email">Email</label>
+								</div>
+							</div>
+							<div className="row">
+								<div className="input-field col s12">
+									<input
+										name="password"
+										id="password" 
+										type="password" 
+										className="validate"
+										onChange={changeHandler}
+										onKeyPress={pressHandler}
+									/>
+									<label htmlFor="password">Password</label>
+								</div>
 							</div>
 						</div>
-						<div className="row">
-							<div className="input-field col s12">
-								<input
-									name="password"
-									id="password" 
-									type="password" 
-									className="validate"
-									onChange={changeHandler}
-									onKeyPress={pressHandler}
-								/>
-								<label htmlFor="password">Password</label>
-							</div>
+						<div className="card-action center">
+							<a href="/registration" className="btn blue darken-5">Register</a>
+							<button 
+								className="btn yellow black-text darken-5"
+								onClick={authHandler}
+								disabled={loading}
+								>Log in
+							</button>
 						</div>
-					</div>
-					<div className="card-action center">
-						<a href="/registration" className="btn blue darken-5">Register</a>
-						<button 
-							className="btn yellow black-text darken-5"
-							onClick={authHandler}
-							disabled={loading}
-							>Log in
-						</button>
 					</div>
 				</div>
 			</div>
-		</div>
+		</>
 	)
 }
 

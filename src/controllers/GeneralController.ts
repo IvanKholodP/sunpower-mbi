@@ -35,4 +35,21 @@ export default class GeneralController {
 			return next(error)
 		}
 	}
+
+	autorizeAdmin(req: Request, res: Response, next: NextFunction) {
+		if (req.method === 'OPTIONS') {
+			return next()
+		}
+		try {
+			const token = req.headers.authorization.split(' ')[1];
+			if (!token) {
+				next( new ErrorHandler(EResponseCodes.TOKEN_WRONG))
+			}
+			const decoded = jwt.verify(token, process.env.JWT_SECRET_WORD);
+			req.body.admin = decoded;
+			next()
+		}catch (error) {
+			return next(error)
+		}
+	}
 }

@@ -81,3 +81,8 @@ export type TCreateAdminTypes = {
 	retryPassword: string,
 	phoneNumber: string,
 };
+
+export type TEditAdminAppTypes = {
+	appId: number,
+	commentsLogist: string,
+};

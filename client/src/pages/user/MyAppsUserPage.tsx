@@ -9,7 +9,6 @@ import { EditMyApp } from "../../components/editMyApp/EditMyApp";
 import { useMessage } from "../../hooks/messageHook";
 
 const monthNow = (moment().month() + 1).toString();
-console.log(monthNow)
 const yearNow = moment().year().toString();
 
 declare let confirm: (question: string) => boolean;

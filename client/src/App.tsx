@@ -7,6 +7,7 @@ import { SideNav } from './components/sidenav/SideNav';
 import { NavBar } from './components/navbar/NavBar';
 import { Loader } from './components/loader/Loader';
 import 'materialize-css';
+import { NavBarAdmin } from './components/nawBarAdmin/NavBarAdmin';
 
 declare global {
   interface Window {
@@ -15,9 +16,11 @@ declare global {
 }
 
 const App: React.FC = () => {
-  const { login, token, userId, logout, ready, admin } = useAuth();
-  const isAuthenticated: boolean = !!token;
-  const routes = useRouter(isAuthenticated, admin );
+  const { login, token, userId, logout, ready, adminId, loginAdmin, tokenAdmin } = useAuth();
+  let isAuthenticated: boolean = !!token;
+  const isAuthenticatedAdmin: boolean = !!tokenAdmin;
+  const routes = useRouter(isAuthenticated, isAuthenticatedAdmin);
+
   useEffect(() => {
     window.M.AutoInit();
    });
@@ -25,20 +28,46 @@ const App: React.FC = () => {
   if(!ready) {
     return <Loader />
   }
-  return (
-    <AuthContext.Provider
-      value={{ login, token, userId, logout, isAuthenticated, admin }}>
-      <Router>
-        { isAuthenticated && <NavBar />}
-          <div className="row">
-          { isAuthenticated && <SideNav /> }
-          {/* <div className="col s12 m8 l9"> */}
+
+  if (isAuthenticatedAdmin) {
+    return (
+      <AuthContext.Provider
+        value={{ login, token, userId, logout, isAuthenticated, adminId, loginAdmin, isAuthenticatedAdmin, tokenAdmin }}>
+        <Router>
+          {isAuthenticatedAdmin && <NavBarAdmin />}
+            <div className="row">
+              {routes}
+          </div>
+        </Router>
+      </AuthContext.Provider>
+    );
+  } else if (isAuthenticated) {
+    return (
+      <AuthContext.Provider
+        value={{ login, token, userId, logout, isAuthenticated, adminId, loginAdmin, isAuthenticatedAdmin, tokenAdmin }}>
+        <Router>
+          {isAuthenticated && <NavBar />}
+            <div className="row">
+            {/* { isAuthenticated && <SideNav /> } */}
+            { isAuthenticated && <SideNav />}
+            {/* <div className="col s12 m8 l9"> */}
+              {routes}
+            {/* </div> */}
+          </div>
+        </Router>
+      </AuthContext.Provider>
+    );
+  } else {
+    return (
+      <AuthContext.Provider
+        value={{ login, token, userId, logout, isAuthenticated, adminId, loginAdmin, isAuthenticatedAdmin, tokenAdmin }}>
+        <Router>
             {routes}
-          {/* </div> */}
-        </div>
-      </Router>
-    </AuthContext.Provider>
-  );
+        </Router>
+      </AuthContext.Provider>
+    );
+  }
+  
 }
 
 export default App;

@@ -16,7 +16,6 @@ export const EditMyApp: React.FC<{editFormData: any, handleEditFormChange: any, 
 					value={editFormData.deliverPlaning}
 					onChange={handleEditFormChange}
 				/>
-					
 			</td>
 			<td>
 				<input 

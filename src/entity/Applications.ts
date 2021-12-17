@@ -26,10 +26,10 @@ export class Applications {
 	@Column()
 	payer: string;
 
-	@Column({nullable: true})
+	@Column({nullable: true, type: "varchar"})
 	commentsSales: string;
 
-	@Column({nullable: true})
+	@Column({nullable: true, type: "varchar"})
 	commentsLogist?: string;
 
 	@Column()
