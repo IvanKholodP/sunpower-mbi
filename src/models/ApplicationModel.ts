@@ -5,6 +5,7 @@ import { EGeneralStatus, EGeneralType, TApplicationTypes, TDeleteMyAppTypes, TEd
 import { Applications } from "../entity/Applications";
 import { User } from "../entity/User";
 import ErrorHandler, { EResponseCodes } from "../utils/ErrorHandler";
+import Helpers from "../utils/Helpers";
 
 
 const telegraf = new Telegram();
@@ -36,7 +37,7 @@ export default class ApplicationModel {
 				Вантаж: ${args.goods}
 				Спосіб доставки: ${args.sendMethod}
 				Адреса отримувача: ${args.city}
-				Дані отримаувача: ${args.recipientData}
+				Дані отримувача: ${args.recipientData}
 				Платник: ${args.payer}
 				Коментар менеджера: ${args.commentsSales}
 			`;
@@ -109,7 +110,7 @@ export default class ApplicationModel {
 				Вантаж: ${args.goods}
 				Спосіб доставки: ${args.sendMethod}
 				Адреса отримувача: ${args.city}
-				Дані отримаувача: ${args.recipientData}
+				Дані отримувача: ${args.recipientData}
 				Платник: ${args.payer}
 				Коментар менеджера: ${args.commentsSales}
 			`;
@@ -155,6 +156,7 @@ export default class ApplicationModel {
 			const result = await application.save(newApp);
 			const botTextMessage = `
 				Заявку №${args.appId} змінено:
+				Статус: ${Helpers.setAppStatus(args.status)},
 				Коментар логіста: ${args.commentsLogist}
 			`;
 			telegraf.bot.telegram.sendMessage(process.env.ADMIN_BOT_ID, botTextMessage);

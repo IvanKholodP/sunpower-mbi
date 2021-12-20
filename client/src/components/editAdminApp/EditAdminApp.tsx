@@ -1,11 +1,23 @@
 import React from "react";
+import Helper from "../../helpers/Helper";
 
 
 export const EditAdminApp: React.FC<{editFormData: any, handleEditFormChange: any, handleCancelClick: any}> = ({editFormData, handleEditFormChange, handleCancelClick}) => {
 	return(
 		<tr key={editFormData.appId} >
             <td>
-				<span>{editFormData.appId}</span>
+				<span>{editFormData.appId}{editFormData.status}</span>
+			</td>
+			<td>
+				<select 
+					name="status" 
+					defaultValue={1}
+					onChange={handleEditFormChange}>
+					<option value="1">{Helper.setAppStatus(1)}</option>
+					<option value="2">{Helper.setAppStatus(2)}</option>
+					<option value="3">{Helper.setAppStatus(3)}</option>
+					<option value="4">{Helper.setAppStatus(4)}</option>
+				</select>
 			</td>
 			<td>
                 <input 

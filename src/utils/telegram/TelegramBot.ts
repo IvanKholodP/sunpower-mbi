@@ -3,8 +3,10 @@ import { commands } from "./telegramCommands";
 import fetch from 'node-fetch';
 import { getRepository } from "typeorm";
 import { User } from "../../entity/User";
-import ErrorHandler from "../ErrorHandler";
 import { Admin } from "../../entity/Admin";
+import { Applications } from "../../entity/Applications";
+import { EGeneralStatus, EGeneralType } from "../../@types/global";
+import Helpers from "../Helpers";
 
 class TelegramBot {
 	async botStart (ctx: Context) {
@@ -30,16 +32,21 @@ class TelegramBot {
 			if (candidat) {
 				candidat.botId = ctx.message.contact.user_id;
 				await user.save(candidat);
-			}
-			if (administrator) {
-				administrator.botId = ctx.message.contact.user_id;
-				await admin.save(administrator);
-			}
-			await ctx.reply(`
+				await ctx.reply(`
 				Привіт, ${ctx.from.first_name}!
 				Я твій помічник для роботи.
 				Щоб дізнатись про мої команди, натисни /help або скористайся меню.
 			`);
+			}
+			if (administrator) {
+				administrator.botId = ctx.message.contact.user_id;
+				await admin.save(administrator);
+				await ctx.reply(`
+				Привіт, ${ctx.from.first_name}!
+				Я твій помічник для роботи.
+				Щоб дізнатись про мої команди, натисни /help або скористайся меню.
+			`);
+			}
 		} catch (error) {
 			console.error(error);
 		}
@@ -78,6 +85,52 @@ class TelegramBot {
 		} catch (error) {
 			console.error(error);
 		}
+	}
+
+	async getAppData(ctx: any) {
+		try {
+			const AppRepository = getRepository(Applications);
+			const appData = await AppRepository.findOne({appId: ctx.message.text});
+			if (appData.type === EGeneralType.DELETED) await ctx.reply("Даної заявки не існує");
+			const formatAppData = `
+			Дані заявки №${appData.appId}:
+				Статус: ${Helpers.setAppStatus(appData.status)}
+				Коментар логіста: ${Helpers.deleteNullFromMessage(appData.commentsLogist)}
+				Дата доставки: ${appData.deliverPlaning}
+				Вантаж: ${appData.goods}
+				Спосіб доставки: ${appData.sendMethod}
+				Адреса отримувача: ${appData.city}
+				Дані отримувача: ${appData.recipientData}
+				Платник: ${appData.payer}
+				Коментар менеджера: ${appData.commentsSales}
+				`;
+			await ctx.reply(formatAppData);
+		} catch (error) {
+			await ctx.reply("Даної команди не існує");
+			console.error(error);
+		}
+	}
+
+	async getAllMyApp(ctx: Context) {
+		try {
+			const AppRepository = getRepository(Applications);
+			const UserRepository = getRepository(User);
+			const user = await UserRepository.findOne({botId: ctx.message.from.id});
+			const apps = await AppRepository.find({where: {user: user.userId, type: EGeneralType.ACTIVE}});
+			const appsList = [];
+			apps.map((item)=> {
+				if (item.status < 3) {
+					appsList.push(
+						`Заявка №: ${item.appId} - Статус: ${Helpers.setAppStatus(item.status)} - Коментар логіста :${Helpers.deleteNullFromMessage(item.commentsLogist)}`);
+				}
+			});
+			await ctx.reply(appsList.join(',  ').toString());
+			console.log('appsList:', appsList.join(',  ').toString())
+		} catch (error) {
+			await ctx.reply("щось не так");
+			console.error(error);
+		}
+		
 	}
 }
 

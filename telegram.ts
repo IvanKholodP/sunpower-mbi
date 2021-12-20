@@ -17,14 +17,18 @@ class Telegram {
 
 	public launch() {
 		const telegram = new TelegramBot();
-		const triggersRate = ["курс", "Курс"];
+		const triggersRate = ["курс", "Курс", "Бот курс валют", "Бот дай курс", "Бот дай курс валют" ];
+		const triggersGetApps = ['мої заявки', 'Мої заявки', 'Бот мої заявки']
 
 		this.bot.help(telegram.botHelp)
 		this.bot.start(telegram.botStart)
 
 		this.bot.hears(triggersRate, telegram.getRate);
+		this.bot.hears(triggersGetApps, telegram.getAllMyApp);
 		this.bot.command("rate", telegram.getRate);
+		this.bot.command('getApps', telegram.getAllMyApp);
 		this.bot.on("contact", telegram.getContact);
+		this.bot.on('text', telegram.getAppData);
 		this.bot.on("text", telegram.notExist);
 
 		this.bot.launch()

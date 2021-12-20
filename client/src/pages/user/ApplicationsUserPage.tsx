@@ -50,7 +50,7 @@ const ApplicationsUserPage: React.FC = () => {
 	}
 
 	return(
-		<div className="col s9" style={{width: '80%'}}>
+		<div className="col s12">
 			<div className="input-field col s3">
 				<select onChange={selectChangeMonth} defaultValue={monthNow}>
 					{uniqeMonths.map((month: number) => {
@@ -63,7 +63,7 @@ const ApplicationsUserPage: React.FC = () => {
 						);
 					})}
 				</select>
-				<label>Choose the Month</label>
+				<label>Виберіть місяць</label>
 			</div>
 				<div className="input-field col s3">
 					<select onChange={selectChangeYear} defaultValue={yearNow}>
@@ -77,22 +77,23 @@ const ApplicationsUserPage: React.FC = () => {
 							);
 						})}
 					</select>
-					<label>Choose one Year</label>
+					<label>Виберіть рік</label>
 				</div>
 			<div>
 				<table>
 					<thead>
 						<tr>
-							<th>Comments Logist</th>
-							<th>Create App</th>
-							<th>deliverPlaning</th>
-							<th>Manager</th>
-							<th>Goods</th>
-							<th>Send Method</th>
-							<th>City</th>
-							<th>Recipient Data</th>
-							<th>Payer</th>
-							<th>Comments Sales</th>
+							<th>№ заявки</th>
+							<th>Коментар логіста</th>
+							<th>Дата створення</th>
+							<th>Планова дата доставки</th>
+							<th>Менеджер</th>
+							<th>Вантаж</th>
+							<th>Метод відправки</th>
+							<th>Місто</th>
+							<th>Дані отримувача</th>
+							<th>Платник</th>
+							<th>Коментар менеджера</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -100,7 +101,8 @@ const ApplicationsUserPage: React.FC = () => {
 							if (selectedOptionMonth === app.month.toString() && selectedOptionYear === app.year.toString()) {
 								return (
 									<tr key={app.appId} >
-										<td style={{backgroundColor: Helper.setAppStatusColor(app.status)}}>{app.appId}</td>
+										<td style={{textAlign:'center', backgroundColor: Helper.setAppStatusColor(app.status)}}>{app.appId}</td>
+										<td>{app.commentsLogist}</td>
 										<td>{moment.utc(app.createAt).add(2, 'hours').format('YYYY-MM-DD HH:mm:ss')}</td>
 										<td>{app.deliverPlaning}</td>
 										<td>{`${app.firstName} ${app.lastName}`}</td>

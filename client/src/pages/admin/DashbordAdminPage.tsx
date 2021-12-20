@@ -20,7 +20,7 @@ const DashboardAdminPage: React.FC = () => {
 	const [selectedOptionMonth, setSelectedOptionMonth] = useState<String>(monthNow);
 	const [selectedOptionYear, setSelectedOptionYear] = useState<String>(yearNow);
 	const [editFormData, setEditFormData] = useState({
-		deliverPlaning: '', goods: '', sendMethod: '', city: '', recipientData: '', payer: '', commentsSales: '', updateAt: '', year: '', month: '', appId: '', commentsLogist: '', status
+		deliverPlaning: '', goods: '', sendMethod: '', city: '', recipientData: '', payer: '', commentsSales: '', updateAt: '', year: '', month: '', appId: '', commentsLogist: '', status: ''
 	  });
 	const [editAppId, setEditAppId] = useState(null);  
 	const {loading, request} = useHttp();
@@ -50,24 +50,30 @@ const DashboardAdminPage: React.FC = () => {
 	const handleEditClick = (event: React.FormEvent<HTMLFormElement>, app: any) => {
 		event.preventDefault();
 		setEditAppId(app.appId);
+
+		if (app.status < 4) {
+			const formValues = {
+				appId: app.appId,
+				deliverPlaning: app.deliverPlaning,
+				goods: app.goods,
+				sendMethod: app.sendMethod,
+				city: app.city,
+				recipientData: app.recipientData,
+				payer: app.payer,
+				commentsSales: app.commentsSales,
+				updateAt: app.updateAt,
+				year: app.year,
+				month: app.month,
+				commentsLogist: app.commentsLogist,
+				status: app.status
+			};
+		
+			setEditFormData(formValues);
+		} else {
+			message("Заявку в процесі не можливо змінити");
+		}
 	
-		const formValues = {
-			appId: app.appId,
-			deliverPlaning: app.deliverPlaning,
-			goods: app.goods,
-			sendMethod: app.sendMethod,
-			city: app.city,
-			recipientData: app.recipientData,
-			payer: app.payer,
-			commentsSales: app.commentsSales,
-			updateAt: app.updateAt,
-			year: app.year,
-			month: app.month,
-			commentsLogist: app.commentsLogist,
-			status: app.status
-		};
-	
-		setEditFormData(formValues);
+
 	  };
 
 
@@ -82,10 +88,9 @@ const DashboardAdminPage: React.FC = () => {
 	
 		const editedApp: any = {
 			appId: editAppId,
-			status: editAppId.status,
+			status: editFormData.status,
 			commentsLogist: editFormData.commentsLogist,
 		};
-		console.log('editedApp', editedApp)
 		const newApps = [...apps];
 	
 		const index = apps.findIndex((app: IGetMyApps) => app.appId === editAppId);
@@ -99,6 +104,7 @@ const DashboardAdminPage: React.FC = () => {
 				Authorization: `Bearer ${auth.tokenAdmin}`
 			  })
 			message(data.message);
+			window.location.reload()
 		} catch (error) {
 			console.log(error)
 		}
@@ -167,6 +173,7 @@ const DashboardAdminPage: React.FC = () => {
 						<thead>
 							<tr key={Math.random()}>
 								<th>№ заявки</th>
+								<th>Статус відправки</th>
 								<th>Коментар логіста</th>
 								<th>Дата створення</th>
 								<th>Планова дата доставки</th>

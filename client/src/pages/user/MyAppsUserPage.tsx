@@ -43,36 +43,33 @@ const MyAppsUserPage: React.FC = () => {
 	const uniqeYears: number[] = Array.from(new Set(apps.map((app) => app.year))).sort((a: number, b: number)=> {return a - b});
 
 	
-	const selectChangeMonth = (event: React.ChangeEvent<HTMLSelectElement>) => {
-		//event.preventDefault()
-		setSelectedOptionMonth(event.target.value);
-		console.log(event.target.value)
-	} 
+	const selectChangeMonth = (event: React.ChangeEvent<HTMLSelectElement>) => setSelectedOptionMonth(event.target.value);
 
-	const selectChangeYear = (event: React.ChangeEvent<HTMLSelectElement>) => {
-		// event.preventDefault()
-		setSelectedOptionYear(event.target.value);
-		console.log(event.target.value)
-	}
+	const selectChangeYear = (event: React.ChangeEvent<HTMLSelectElement>) => setSelectedOptionYear(event.target.value);
 
 	const handleEditClick = (event: React.FormEvent<HTMLFormElement>, app: any) => {
 		event.preventDefault();
 		setEditAppId(app.appId);
-	
-		const formValues = {
-			deliverPlaning: app.deliverPlaning,
-			goods: app.goods,
-			sendMethod: app.sendMethod,
-			city: app.city,
-			recipientData: app.recipientData,
-			payer: app.payer,
-			commentsSales: app.commentsSales,
-			updateAt: app.updateAt,
-			year: app.year,
-			month: app.month,
-		};
-	
-		setEditFormData(formValues);
+		
+		if (app.status < 4) {
+			const formValues = {
+				deliverPlaning: app.deliverPlaning,
+				goods: app.goods,
+				sendMethod: app.sendMethod,
+				city: app.city,
+				recipientData: app.recipientData,
+				payer: app.payer,
+				commentsSales: app.commentsSales,
+				updateAt: app.updateAt,
+				year: app.year,
+				month: app.month,
+				appId: app.appId,
+			};
+		
+			setEditFormData(formValues);
+		} else {
+			message("Заявку в процесі не можливо змінити");
+		}
 	  };
 
 
@@ -112,6 +109,7 @@ const MyAppsUserPage: React.FC = () => {
 				Authorization: `Bearer ${auth.token}`
 			  })
 			message(data.message);
+			window.location.reload();
 		} catch (error) {
 			console.log(error)
 		}
@@ -149,46 +147,45 @@ const MyAppsUserPage: React.FC = () => {
 	}
 
 	return(
-		<div className="col s9" style={{width: '80%'}}>
+		<div className="col s12">
 			<div className="input-field col s3">
 				<select defaultValue={monthNow} onChange={selectChangeMonth} >
 					{uniqeMonths.map((month: number) => {
 						return (
-							<option value={month}>
+							<option key={Math.random()} value={month}>
 								{moment().month(month - 1).format("MMMM")}
 							</option>
 						);
 					})}
 				</select>
-				<label>Choose the Month</label>
+				<label>Виберіть місяць</label>
 			</div>
 			<div className="input-field col s3">
 				<select defaultValue={yearNow} onChange={selectChangeYear}>
 					{uniqeYears.map((year: number) => {
 						return (
-							<>
-								<option value={year}>{year}</option>
-							</>
+							<option key={Math.random()} value={year}>{year}</option>
 						);
 					})}
 				</select>
-				<label>Choose one Year</label>
+				<label>Виберіть рік</label>
 			</div>
 			<div>
 				<form onSubmit={handleEditFormSubmit}> 
 					<table>
 						<thead>
 							<tr key={Math.random()}>
-								<th>Comments Logist</th>
-								<th>Create App</th>
-								<th>deliverPlaning</th>
-								<th>Goods</th>
-								<th>Send Method</th>
-								<th>City</th>
-								<th>Recipient Data</th>
-								<th>Payer</th>
-								<th>Comments Sales</th>
-								<th>Actions</th>
+								<th>№ заявки</th>
+								<th>Коментар логіста</th>
+								<th>Дата створення</th>
+								<th>Планова дата доставки</th>
+								<th>Вантаж</th>
+								<th>Метод відправки</th>
+								<th>Місто</th>
+								<th>Дані отримувача</th>
+								<th>Платник</th>
+								<th>Коментар менеджера</th>
+								<th>Кнопки</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -202,6 +199,7 @@ const MyAppsUserPage: React.FC = () => {
 													editFormData={editFormData} 
 													handleEditFormChange={handleEditFormChange}
 													handleCancelClick={handleCancelClick}
+													key={app.appId}
 												/>
 													) : (
 												<TableComponent 

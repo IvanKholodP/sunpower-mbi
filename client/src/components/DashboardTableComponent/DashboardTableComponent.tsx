@@ -7,6 +7,7 @@ export const DashboardTableComponent: React.FC<{app: IGetMyApps, handleEditClick
 	return(
 		<tr key={app.appId} >						
 			<td style={{backgroundColor: Helper.setAppStatusColor(app.status), textAlign: 'center'}}>{app.appId}</td>
+			<td style={{textAlign: 'center'}}>{Helper.setAppStatus(app.status)}</td>
             <td>{app.commentsLogist}</td>
 			<td>{moment.utc(app.createAt).add(2, 'hours').format('DD.MM.YYYY HH:mm:ss')}</td>
 			<td>{app.deliverPlaning}</td>

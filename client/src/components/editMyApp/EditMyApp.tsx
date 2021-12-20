@@ -2,9 +2,12 @@ import React from "react";
 
 export const EditMyApp: React.FC<{editFormData: any, handleEditFormChange: any, handleCancelClick: any}> = ({editFormData, handleEditFormChange, handleCancelClick}) => {
 	return(
-		<tr key={editFormData.appId} >
+		<tr>
 			<td>
 				<span>{editFormData.appId}</span>
+			</td>
+			<td>
+				<span>{editFormData.commentsLogist}</span>
 			</td>
 			<td>
 				<span>{editFormData.updateAt}</span>

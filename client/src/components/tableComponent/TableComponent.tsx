@@ -5,8 +5,9 @@ import { IGetMyApps } from "../../interface";
 
 export const TableComponent: React.FC<{app: IGetMyApps, handleEditClick: any, handleDeleteClick: any}> = ({app, handleEditClick, handleDeleteClick})=> {
 	return(
-		<tr key={app.appId} >						
-			<td style={{backgroundColor: Helper.setAppStatusColor(app.status)}}>{app.appId}</td>
+		<tr key={app.appId} >	
+			<td style={{textAlign: 'center'}}>{app.appId}</td>					
+			<td style={{backgroundColor: Helper.setAppStatusColor(app.status)}}>{app.commentsLogist}</td>
 			<td>{moment.utc(app.createAt).add(2, 'hours').format('YYYY-MM-DD HH:mm:ss')}</td>
 			<td>{app.deliverPlaning}</td>
 			<td>{app.goods}</td>

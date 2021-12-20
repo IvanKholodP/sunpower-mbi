@@ -105,10 +105,10 @@ export const AppModal: React.FC = () => {
 
   return (
     <div>
-      <button  data-target="modal1" onClick={handleShow} className="btn modal-trigger">new application</button>
+      <button  data-target="modal1" onClick={handleShow} className="btn modal-trigger">Нова заявка</button>
       <div id="modal1" className="modal" style={{background: "green"}}>
         <div className="modal-content" style={{ color: "black", background: "#eeeeee"}}>
-          <h4 style={{textAlign: 'center', fontWeight: 500}}>Enter the application data</h4>
+          <h4 style={{textAlign: 'center', fontWeight: 500}}>Введідь дані нової заявки</h4>
           {modal}
           <form className="col s12" noValidate>
             <div className="row">
@@ -124,7 +124,7 @@ export const AppModal: React.FC = () => {
                   {form.errors.deliverPlaning.length > 0 && (
                     <span className="error">{form.errors.deliverPlaning}</span>
                   )}
-                  <label htmlFor="deliverPlaning">Deliver planing</label>
+                  <label htmlFor="deliverPlaning">Планова дата доставки</label>
                 </div>
                 <div className="input-field col s6">
                   <input
@@ -135,7 +135,7 @@ export const AppModal: React.FC = () => {
                     value={form.goods}
                     onChange={changeHandler}
                   />
-                  <label htmlFor="goods">Goods</label>
+                  <label htmlFor="goods">Вантаж</label>
                   {form.errors.goods.length > 0 && (
                     <span className="error">{form.errors.goods}</span>
                   )}
@@ -151,7 +151,7 @@ export const AppModal: React.FC = () => {
                     value={form.sendMethod}
                     onChange={changeHandler}
                   />
-                  <label htmlFor="sendMethod">Send method</label>
+                  <label htmlFor="sendMethod">Метод відправки</label>
                   {form.errors.sendMethod.length > 0 && (
                     <span className="error">{form.errors.sendMethod}</span>
                   )}
@@ -165,7 +165,7 @@ export const AppModal: React.FC = () => {
                     value={form.city}
                     onChange={changeHandler}
                   />
-                  <label htmlFor="city">City</label>
+                  <label htmlFor="city">Місто</label>
                   {form.errors.city.length > 0 && (
                     <span className="error">{form.errors.city}</span>
                   )}
@@ -181,7 +181,7 @@ export const AppModal: React.FC = () => {
                     value={form.recipientData}
                     onChange={changeHandler}
                   />
-                <label htmlFor="recipientData">Recipient data</label>
+                <label htmlFor="recipientData">Дані отримувача</label>
                 {form.errors.recipientData.length > 0 && (
                   <span className="error">{form.errors.recipientData}</span>
                 )}
@@ -196,6 +196,7 @@ export const AppModal: React.FC = () => {
                     <option value="Отримувач">Отримувач</option>
                     <option value="Відправник">Відправник</option>
                 </select>
+                <label htmlFor="commentsSales">Платник</label>
               </div>
             </div>
             <div className="row">
@@ -208,7 +209,7 @@ export const AppModal: React.FC = () => {
                   value={form.commentsSales}
                   onChange={changeHandler}
                 />
-                <label htmlFor="commentsSales">Comments sales</label>
+                <label htmlFor="commentsSales">Коментар менеджера</label>
               </div>
             </div>
           </form>

@@ -85,4 +85,5 @@ export type TCreateAdminTypes = {
 export type TEditAdminAppTypes = {
 	appId: number,
 	commentsLogist: string,
+	status: number
 };

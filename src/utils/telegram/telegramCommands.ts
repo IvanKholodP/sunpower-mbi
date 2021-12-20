@@ -1,8 +1,9 @@
 const commands = `
-	My commands:
-	/help - My commands
-	/rate - currency exchange
-	/address - our main addresses
+	Мої команди:
+	/help - Мої команди
+	/rate - Курс валют
+	/address - Адреси
+	/getApps - Мої заявки
 	`;
 
 export {commands};

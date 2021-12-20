@@ -48,11 +48,8 @@ const App: React.FC = () => {
         <Router>
           {isAuthenticated && <NavBar />}
             <div className="row">
-            {/* { isAuthenticated && <SideNav /> } */}
             { isAuthenticated && <SideNav />}
-            {/* <div className="col s12 m8 l9"> */}
               {routes}
-            {/* </div> */}
           </div>
         </Router>
       </AuthContext.Provider>
