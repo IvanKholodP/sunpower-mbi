@@ -3,7 +3,7 @@ import TelegramBot from './src/utils/telegram/TelegramBot';
 
 
 class Telegram {
-	public bot: Telegraf | any;
+	public bot: Telegraf;
 
 	constructor(){
 		this.bot = new Telegraf(process.env.TELEGRAM_BOT);
@@ -17,9 +17,7 @@ class Telegram {
 
 	public launch() {
 		const telegram = new TelegramBot();
-		const API = process.env.TELEGRAM_BOT || ''
-		this.bot.telegram.setWebhook(`${process.env.URL}/bot${process.env.TELEGRAM_BOT}`);
-		this.bot.startWebhook(`/bot${API}`, null, 5001);
+		this.bot.telegram.setWebhook(`${process.env.URL}/bot/${this.bot.secretPathComponent()}`);
 		const triggersRate = ["курс", "Курс", "Бот курс валют", "Бот дай курс", "Бот дай курс валют" ];
 		const triggersGetApps = ['мої заявки', 'Мої заявки', 'Бот мої заявки']
 

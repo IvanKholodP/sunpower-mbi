@@ -15,12 +15,13 @@ import PutAdminAppController from './src/controllers/PutAdminAppController';
 import PutMyAppController from './src/controllers/PutMyAppController';
 import RegistrationAdminController from './src/controllers/RegistrationAdminController';
 import RegistrationUser from "./src/controllers/RegistrationUserController";
-import Telegram from './telegram';
+// import Telegram from './telegram';
+import TelegramBot from './src/utils/telegram/TelegramBot';
 
 
 
 function init() {
-	const bot = new Telegram()
+	// const bot = new Telegram()
 	const app = new App([
 		// user
 		new RegistrationUser(),
@@ -43,12 +44,26 @@ function init() {
 		new PutAdminAppController(),
 		new GetAdminController(), 
 	]);
+	// app.bot.launch();
+	const telegram = new TelegramBot();
 
+	app.bot.telegram.setWebhook(`${process.env.URL}/bot/${app.bot.secretPathComponent()}`);
+	const triggersRate = ["курс", "Курс", "Бот курс валют", "Бот дай курс", "Бот дай курс валют" ];
+	const triggersGetApps = ['мої заявки', 'Мої заявки', 'Бот мої заявки']
+	app.bot.help(telegram.botHelp)
+	app.bot.start(telegram.botStart)
+	app.bot.hears(triggersRate, telegram.getRate);
+	app.bot.hears(triggersGetApps, telegram.getAllMyApp);
+	app.bot.command("rate", telegram.getRate);
+	app.bot.command('apps', telegram.getAllMyApp);
+	app.bot.on("contact", telegram.getContact);
+	app.bot.on('text', telegram.getAppData);
+	app.bot.on("text", telegram.notExist);
 	app.listen();
-	bot.launch();
+	// bot.launch();
 
-	process.once("SIGINT", () =>  bot.bot.stop("SIGINT"));
-	process.once("SIGTERM", () => bot.bot.stop("SIGTERM"));
+	process.once("SIGINT", () =>  app.bot.stop("SIGINT"));
+	process.once("SIGTERM", () => app.bot.stop("SIGTERM"));
 
 	process.on('SIGINT', () => {
 		console.log('\nGracefully shutting down from SIGINT (Ctrl-C)');
