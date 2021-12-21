@@ -39,3 +39,9 @@ export interface IGetMyApps {
 	updateAt: Date,
 	commentsLogist: string
 }
+
+export interface IAdminProps {
+	firstName: string,
+	lastName: string,
+	phoneNumber: number,
+}

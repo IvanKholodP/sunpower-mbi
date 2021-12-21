@@ -7,6 +7,7 @@ import AuthAdminController from './src/controllers/AuthAdminController';
 import AuthUserController from "./src/controllers/AuthUserController";
 import DeleteMyAppController from './src/controllers/DeleteMyAppController';
 import GetAdminApplicationsController from './src/controllers/GetAdminApplicationsControllers';
+import GetAdminController from './src/controllers/GetAdminController';
 import GetApplicationsController from './src/controllers/GetApplicationsController';
 import GetMyAppsController from './src/controllers/GetMyAppsController';
 import GetUserController from "./src/controllers/GetUserController";
@@ -40,6 +41,7 @@ function init() {
 		new AuthAdminController(),
 		new GetAdminApplicationsController(),
 		new PutAdminAppController(),
+		new GetAdminController(), 
 	]);
 
 	app.listen();

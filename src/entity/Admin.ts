@@ -14,8 +14,8 @@ export class Admin {
     @Column()
     password: string;
 
-    @Column()
-    phoneNumber: string;
+    @Column({type: "bigint"})
+    phoneNumber: number;
 
     @Column(
         {nullable: true, type: 'bigint'}

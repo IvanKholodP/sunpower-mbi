@@ -87,26 +87,37 @@ class TelegramBot {
 		}
 	}
 
-	async getAppData(ctx: any) {
+	async getAppData(ctx: any, next: Function) {
 		try {
 			const AppRepository = getRepository(Applications);
-			const appData = await AppRepository.findOne({appId: ctx.message.text});
-			if (appData.type === EGeneralType.DELETED) await ctx.reply("Даної заявки не існує");
-			const formatAppData = `
-			Дані заявки №${appData.appId}:
-				Статус: ${Helpers.setAppStatus(appData.status)}
-				Коментар логіста: ${Helpers.deleteNullFromMessage(appData.commentsLogist)}
-				Дата доставки: ${appData.deliverPlaning}
-				Вантаж: ${appData.goods}
-				Спосіб доставки: ${appData.sendMethod}
-				Адреса отримувача: ${appData.city}
-				Дані отримувача: ${appData.recipientData}
-				Платник: ${appData.payer}
-				Коментар менеджера: ${appData.commentsSales}
-				`;
-			await ctx.reply(formatAppData);
+			if (Number(ctx.message.text)) {
+				const appData = await AppRepository.findOne({appId: ctx.message.text});
+				if (appData) {
+					if (appData.type) {
+						const formatAppData = `
+						Дані заявки №${appData.appId}:
+							Статус: ${Helpers.setAppStatus(appData.status)}
+							Коментар логіста: ${Helpers.deleteNullFromMessage(appData.commentsLogist)}
+							Дата доставки: ${appData.deliverPlaning}
+							Вантаж: ${appData.goods}
+							Спосіб доставки: ${appData.sendMethod}
+							Адреса отримувача: ${appData.city}
+							Дані отримувача: ${appData.recipientData}
+							Платник: ${appData.payer}
+							Коментар менеджера: ${appData.commentsSales}
+							`;
+						await ctx.reply(formatAppData);
+					} else {
+						await ctx.reply("Заявка була видалена");
+					} 
+				} else {
+					await ctx.reply("Заявки не існує");
+				}
+			} else {
+				next()
+			}
+
 		} catch (error) {
-			await ctx.reply("Даної команди не існує");
 			console.error(error);
 		}
 	}

@@ -8,6 +8,7 @@ import { NavBar } from './components/navbar/NavBar';
 import { Loader } from './components/loader/Loader';
 import 'materialize-css';
 import { NavBarAdmin } from './components/nawBarAdmin/NavBarAdmin';
+import { SideNavAdmin } from './components/sideNavAdmin/SideNavAdmin';
 
 declare global {
   interface Window {
@@ -36,6 +37,7 @@ const App: React.FC = () => {
         <Router>
           {isAuthenticatedAdmin && <NavBarAdmin />}
             <div className="row">
+            {isAuthenticatedAdmin && <SideNavAdmin />}
               {routes}
           </div>
         </Router>

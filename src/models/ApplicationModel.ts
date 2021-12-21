@@ -136,7 +136,7 @@ export default class ApplicationModel {
 			removeApp.type = EGeneralType.DELETED;
 			const result = await application.save(removeApp);
 			const botTextMessage = `
-				Заявку №${args.appId} видалено:
+				Заявку №${args.appId} видалено
 			`;
 			telegraf.bot.telegram.sendMessage(process.env.ADMIN_BOT_ID, botTextMessage);
 			if(removeApp.user.botId){
@@ -153,10 +153,11 @@ export default class ApplicationModel {
 			const application = getRepository(Applications);
 			const newApp = await application.findOne({where: {appId: args.appId}, relations: ["user"]})
 			newApp.commentsLogist = args.commentsLogist;
+			newApp.status = args.status;
 			const result = await application.save(newApp);
 			const botTextMessage = `
 				Заявку №${args.appId} змінено:
-				Статус: ${Helpers.setAppStatus(args.status)},
+				Статус: ${Helpers.setAppStatus(Number(args.status))},
 				Коментар логіста: ${args.commentsLogist}
 			`;
 			telegraf.bot.telegram.sendMessage(process.env.ADMIN_BOT_ID, botTextMessage);

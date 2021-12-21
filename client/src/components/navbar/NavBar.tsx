@@ -20,7 +20,7 @@ export const NavBar: React.FC = () => {
 				<div className="nav-wrapper green darken-4">
 					<ul id="nav-mobile" className="right hide-on-med-and-down">
 						<li>
-							<a href="#" data-target='slide-out' className="sidenav-trigger" style={{display: "block"}}><i className="material-icons">menu</i></a>
+							<a href="!#" data-target='slide-out' className="sidenav-trigger" style={{display: "block"}}><i className="material-icons">menu</i></a>
 							<NavLink className="brand-logo" to='/'>MBI Development</NavLink>
 						</li>
 						<li>

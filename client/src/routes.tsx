@@ -8,12 +8,14 @@ import ApplicationsUserPage from "./pages/user/ApplicationsUserPage"
 import MyAppsUserPage from "./pages/user/MyAppsUserPage";
 import DashboardAdminPage from "./pages/admin/DashbordAdminPage";
 import AuthAdminPage from "./pages/admin/AuthAdminPage";
+import AdressAdminPage from "./pages/admin/AdressAdminPage";
 
 export const useRouter = (isAuthentication: boolean, isAuthenticatedAdmin: boolean) => {
 	if (isAuthenticatedAdmin) {
 		return(
 			<Switch>
 				<Route exact path="/dashboard" component={DashboardAdminPage} />
+				<Route exact path="/adress" component={AdressAdminPage} />
 				<Redirect to='/dashboard' />
 			</Switch>
 		)

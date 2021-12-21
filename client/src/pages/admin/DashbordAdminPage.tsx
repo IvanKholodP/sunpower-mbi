@@ -192,7 +192,7 @@ const DashboardAdminPage: React.FC = () => {
 									console.log(app.year)
 									return (
 										<Fragment>
-											{editAppId === app.appId && app.status === 1? 
+											{editAppId === app.appId && app.status < 4? 
 												(<EditAdminApp
 													editFormData={editFormData} 
 													handleEditFormChange={handleEditFormChange}

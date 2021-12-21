@@ -79,7 +79,7 @@ export type TCreateAdminTypes = {
 	lastName: string,
 	password: string,
 	retryPassword: string,
-	phoneNumber: string,
+	phoneNumber: number,
 };
 
 export type TEditAdminAppTypes = {

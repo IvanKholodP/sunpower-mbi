@@ -15,7 +15,7 @@ export default class AuthModel {
 		return jwt.sign(payload, process.env.JWT_SECRET_WORD, { expiresIn: "1h" });
 	};
 
-	public generateAdminAccessToken = (adminId: number, phoneNumber: string) => {
+	public generateAdminAccessToken = (adminId: number, phoneNumber: number) => {
 		const payload: object = {
 			adminId,
 			phoneNumber
@@ -47,7 +47,6 @@ export default class AuthModel {
 		try {
 			const adminRepository = getRepository(Admin);
 			const admin = await adminRepository.findOne({phoneNumber: args.phoneNumber});
-			console.log('admin:', admin)
 			if (!admin) {
 				throw new ErrorHandler(EResponseCodes.AUTH_ERROR);
 			}
@@ -57,7 +56,6 @@ export default class AuthModel {
 			}
 
 			const tokenAdmin: string = this.generateAdminAccessToken(admin.adminId, admin.phoneNumber);
-			console.log('token:', tokenAdmin)
 			return { tokenAdmin, adminId: admin.adminId, message: 'Вхід виконано' };
 		} catch (error) {
 			return new ErrorHandler(EResponseCodes.AUTH_ERROR);
