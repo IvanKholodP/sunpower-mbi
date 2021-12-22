@@ -19,7 +19,7 @@ class Telegram {
 		const telegram = new TelegramBot();
 		this.bot.telegram.setWebhook(`${process.env.URL}/bot/${this.bot.secretPathComponent()}`);
 		const triggersRate = ["курс", "Курс", "Бот курс валют", "Бот дай курс", "Бот дай курс валют" ];
-		const triggersGetApps = ['мої заявки', 'Мої заявки', 'Бот мої заявки']
+		const triggersGetApps = ['наші заявки', 'наші заявки', 'Бот наші заявки']
 
 		this.bot.help(telegram.botHelp)
 		this.bot.start(telegram.botStart)
