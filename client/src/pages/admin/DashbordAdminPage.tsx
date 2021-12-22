@@ -72,15 +72,13 @@ const DashboardAdminPage: React.FC = () => {
 		} else {
 			message("Заявку в процесі не можливо змінити");
 		}
-	
-
 	  };
 
 
 	const handleEditFormChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		event.preventDefault();
 		setEditFormData({ ...editFormData,[event.target.name]: event.target.value });
-	  };
+	};
 
 
 	const handleEditFormSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -189,10 +187,9 @@ const DashboardAdminPage: React.FC = () => {
 						<tbody>
 							{apps.map((app: IGetMyApps) => {
 								if (selectedOptionMonth === app.month + '' && selectedOptionYear === app.year + '') {
-									console.log(app.year)
 									return (
 										<Fragment>
-											{editAppId === app.appId && app.status < 4? 
+											{editAppId === app.appId && app.status < 4 ? 
 												(<EditAdminApp
 													editFormData={editFormData} 
 													handleEditFormChange={handleEditFormChange}

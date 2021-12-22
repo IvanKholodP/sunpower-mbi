@@ -10,6 +10,11 @@ export enum EGeneralType {
 	ACTIVE=1,
 }
 
+export enum EAdressStatus {
+	DELETED=0,
+	ACTIVE=1,
+}
+
 export interface IUserRegistrationProps {
 	firstName: string,
 	lastName: string,
@@ -86,4 +91,15 @@ export type TEditAdminAppTypes = {
 	appId: number,
 	commentsLogist: string,
 	status: number
+};
+
+export type TAddNewAdressTypes = {
+	nameStore: string,
+	adressStore: string
+};
+
+export type TEditAdressTypes = {
+	nameStore: string,
+	adressStore: string,
+	adressId: number
 };

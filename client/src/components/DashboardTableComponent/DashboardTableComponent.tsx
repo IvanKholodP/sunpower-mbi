@@ -22,15 +22,13 @@ export const DashboardTableComponent: React.FC<{app: IGetMyApps, handleEditClick
 					type="button"
 					className="btn"
 					onClick={(event: React.BaseSyntheticEvent) => {event.preventDefault(); handleEditClick(event, app)}}
-				>
-					Змінити
+				><i className="large material-icons">mode_edit</i>
 				</button>
 				<button
 					type="button"
-					className="btn"
+					className="btn red darken-3"
 					onClick={(event: React.BaseSyntheticEvent) => {event.preventDefault(); handleDeleteClick(event, app)}}
-				>
-					Видалити
+				><i className="large material-icons">delete_forever</i>
 				</button>
      		</td>
 		</tr>)

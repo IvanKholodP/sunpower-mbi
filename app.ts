@@ -9,11 +9,11 @@ import { Telegraf } from 'telegraf';
 
 class App {
 	public app: Application;
-	public bot: Telegraf;
+	//public bot: Telegraf;
 
 	constructor(controllers){
 		this.app = express();
-		this.bot = new Telegraf(process.env.TELEGRAM_BOT);
+		//this.bot = new Telegraf(process.env.TELEGRAM_BOT);
 
 		this.initializeMiddleWares();
 		this.initializeControllers(controllers);
@@ -29,8 +29,8 @@ class App {
 		this.app.use(cors());
 		this.app.use(express.urlencoded({extended: true}));
 		this.app.use(express.json());
-		this.bot.use(Telegraf.log());
-		this.app.use(this.bot.webhookCallback(`/bot/${this.bot.secretPathComponent()}`))
+		//this.bot.use(Telegraf.log());
+		//this.app.use(this.bot.webhookCallback(`/bot/${this.bot.secretPathComponent()}`))
 		this.app.use(history({
 			htmlAcceptHeaders: ['text/html', 'application/xhtml+xml']
 		}));

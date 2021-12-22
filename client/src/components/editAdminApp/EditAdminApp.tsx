@@ -54,15 +54,14 @@ export const EditAdminApp: React.FC<{editFormData: any, handleEditFormChange: an
 			<td>
 				<button 
 					type="submit" 
-					className="btn">
-						Зберегти
+					className="btn green"
+				><i className="large material-icons">save</i>
 				</button>
 				<button
 					type="button"
 					className="btn"
 					onClick={handleCancelClick}
-				>
-					Назад
+				><i className="large material-icons">cancel</i>
 				</button>
 			</td>
 		</tr>

@@ -1,13 +1,13 @@
 import moment from "moment";
 import { getRepository } from "typeorm";
-import App from '../../app';
+import Telegram from "../../telegram";
 import { EGeneralStatus, EGeneralType, TApplicationTypes, TDeleteMyAppTypes, TEditAdminAppTypes, TEditMyAppTypes, TGetAllApplicationsUserTypes } from "../@types/global";
 import { Applications } from "../entity/Applications";
 import { User } from "../entity/User";
 import ErrorHandler, { EResponseCodes } from "../utils/ErrorHandler";
 import Helpers from "../utils/Helpers";
 
-const telegraf = new App([]);
+const telegraf = new Telegram();
 
 
 export default class ApplicationModel {
@@ -166,7 +166,6 @@ export default class ApplicationModel {
 			}
 			return {result, message: 'Заявку успішно змінено'}
 		} catch (error) {
-			console.log("this bag:", error)
 			return new ErrorHandler(EResponseCodes.AUTH_ERROR);
 		}
 	}

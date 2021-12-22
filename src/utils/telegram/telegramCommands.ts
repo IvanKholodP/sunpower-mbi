@@ -3,7 +3,7 @@ const commands = `
 	/help - Мої команди
 	/rate - Курс валют
 	/address - Адреси
-	/getApps - Мої заявки
+	/apps - Мої заявки
 	`;
 
 export {commands};

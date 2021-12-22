@@ -45,3 +45,14 @@ export interface IAdminProps {
 	lastName: string,
 	phoneNumber: number,
 }
+
+export interface ISetAdressProps {
+	nameStore: string,
+	adressStore: string,
+}
+
+export interface IAdressProps {
+	adressId: number | null,
+	nameStore: string,
+	adressStore: string,
+}

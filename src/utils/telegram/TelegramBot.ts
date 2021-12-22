@@ -5,8 +5,12 @@ import { getRepository } from "typeorm";
 import { User } from "../../entity/User";
 import { Admin } from "../../entity/Admin";
 import { Applications } from "../../entity/Applications";
-import { EGeneralStatus, EGeneralType } from "../../@types/global";
+import { EGeneralType } from "../../@types/global";
 import Helpers from "../Helpers";
+import Telegram from "../../../telegram";
+import { Adress } from "../../entity/Adress";
+
+const telegraf = new Telegram();
 
 class TelegramBot {
 	async botStart (ctx: Context) {
@@ -106,13 +110,11 @@ class TelegramBot {
 							Платник: ${appData.payer}
 							Коментар менеджера: ${appData.commentsSales}
 							`;
-						await ctx.reply(formatAppData);
-					} else {
-						await ctx.reply("Заявка була видалена");
+						return await ctx.reply(formatAppData);
 					} 
-				} else {
-					await ctx.reply("Заявки не існує");
+					return await ctx.reply("Заявка була видалена");
 				}
+				return await ctx.reply("Заявки не існує");
 			} else {
 				next()
 			}
@@ -122,27 +124,69 @@ class TelegramBot {
 		}
 	}
 
-	async getAllMyApp(ctx: Context) {
+	async getAllMyApp(ctx: Context, next: Function) {
 		try {
 			const AppRepository = getRepository(Applications);
 			const UserRepository = getRepository(User);
 			const user = await UserRepository.findOne({botId: ctx.message.from.id});
-			const apps = await AppRepository.find({where: {user: user.userId, type: EGeneralType.ACTIVE}});
-			const appsList = [];
-			apps.map((item)=> {
-				if (item.status < 3) {
-					appsList.push(
-						`Заявка №: ${item.appId} - Статус: ${Helpers.setAppStatus(item.status)} - Коментар логіста :${Helpers.deleteNullFromMessage(item.commentsLogist)}`);
+			if (user) {
+				const apps = await AppRepository.find({where: {user: user.userId, type: EGeneralType.ACTIVE}});
+				if (apps) {
+					const appsList = [];
+					apps.map((item)=> {
+						if (item.status < 3) {
+							appsList.push(
+								`Заявка №: ${item.appId} - Статус: ${Helpers.setAppStatus(item.status)} - Коментар логіста :${Helpers.deleteNullFromMessage(item.commentsLogist)}`);
+						}
+					});
+					if (appsList.length > 0) {
+						return await ctx.reply(appsList.join(',  ').toString());
+					} 
+					return await ctx.reply("У Вас немає активних заявок");
 				}
-			});
-			await ctx.reply(appsList.join(',  ').toString());
-			console.log('appsList:', appsList.join(',  ').toString())
+				return await ctx.reply("У Вас немає активних заявок");
+			}
+			return await ctx.reply("У вас немає доступу да даної команди");
 		} catch (error) {
-			await ctx.reply("щось не так");
 			console.error(error);
 		}
 		
 	}
+
+	async adressButton(ctx: Context) {
+		try {
+			await ctx.replyWithHTML("<b>Адреси:</b>", Markup.inlineKeyboard([
+				[
+					Markup.button.callback("ДСВ", 'dsv'),
+					Markup.button.callback("Мінісклад", 'mini'),
+					Markup.button.callback("Офіс", 'office'),
+			  	]])
+		  	)
+		} catch (error) {
+		  console.error(error);
+		}
+	  };
+
+	
+
+	//adressAction(id_btn, text) {
+	//	telegraf.bot.action(id_btn, async (ctx: any) => {
+	//		try {
+	//			await ctx.answerCbQuery();
+	//			const AdressRepository = getRepository(Adress);
+	//			const adress = await AdressRepository.findOne({nameStore: ctx.message.text});
+	//			if(adress){
+	//				const dataAdress = `${adress.adressStore}`;
+	//				return await ctx.reply(dataAdress);
+	//			} else {
+	//				return await ctx.reply("немає адреси")
+	//			}
+	//			
+	//		} catch (e) {
+	//		  	console.error(e);
+	//		}
+	//	});
+	//}
 }
 
 

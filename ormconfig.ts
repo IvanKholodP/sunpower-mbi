@@ -1,7 +1,8 @@
 import { ConnectionOptions } from 'typeorm';
 import { Admin } from './src/entity/Admin';
+import { Adress } from './src/entity/Adress';
 import { Applications } from './src/entity/Applications';
-import {User} from "./src/entity/User";
+import { User } from "./src/entity/User";
 import { Worker } from './src/entity/Worker';
 
 const config: ConnectionOptions = {
@@ -18,7 +19,7 @@ const config: ConnectionOptions = {
 	synchronize: true,
 	logging: false,
 	entityPrefix: "mbi_",
-	entities: [User, Worker, Applications, Admin],
+	entities: [User, Worker, Applications, Admin, Adress],
 };
 
 export default config;
