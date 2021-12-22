@@ -7,10 +7,10 @@ import { Admin } from "../../entity/Admin";
 import { Applications } from "../../entity/Applications";
 import { EGeneralType } from "../../@types/global";
 import Helpers from "../Helpers";
-import Telegram from "../../../telegram";
-import { Adress } from "../../entity/Adress";
+// import Telegram from "../../../telegram";
+// import { Adress } from "../../entity/Adress";
 
-const telegraf = new Telegram();
+// const telegraf = new Telegram();
 
 class TelegramBot {
 	async botStart (ctx: Context) {

@@ -3,7 +3,7 @@ import TelegramBot from './src/utils/telegram/TelegramBot';
 
 
 class Telegram {
-	public bot: Telegraf | any;
+	public bot: Telegraf;
 
 	constructor(){
 		this.bot = new Telegraf(process.env.TELEGRAM_BOT);

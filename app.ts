@@ -5,7 +5,7 @@ import path from 'path';
 import cors from 'cors';
 import history from 'connect-history-api-fallback';
 import config from './ormconfig';
-import { Telegraf } from 'telegraf';
+// import { Telegraf } from 'telegraf';
 
 class App {
 	public app: Application;
