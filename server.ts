@@ -15,13 +15,11 @@ import PutAdminAppController from './src/controllers/PutAdminAppController';
 import PutMyAppController from './src/controllers/PutMyAppController';
 import RegistrationAdminController from './src/controllers/RegistrationAdminController';
 import RegistrationUser from "./src/controllers/RegistrationUserController";
-// import Telegram from './telegram';
 import TelegramBot from './src/utils/telegram/TelegramBot';
 
 
 
 function init() {
-	// const bot = new Telegram()
 	const app = new App([
 		// user
 		new RegistrationUser(),
@@ -32,9 +30,7 @@ function init() {
 		new AddApplicationController(),
 		new GetApplicationsController(),
 		new GetMyAppsController(),
-
 		new PutMyAppController(),
-
 		new DeleteMyAppController(),
 
 		// admin
@@ -44,7 +40,7 @@ function init() {
 		new PutAdminAppController(),
 		new GetAdminController(), 
 	]);
-	// app.bot.launch();
+
 	const telegram = new TelegramBot();
 
 	app.bot.telegram.setWebhook(`${process.env.URL}/bot/${app.bot.secretPathComponent()}`);
@@ -60,7 +56,7 @@ function init() {
 	app.bot.on('text', telegram.getAppData);
 	app.bot.on("text", telegram.notExist);
 	app.listen();
-	// bot.launch();
+
 
 	process.once("SIGINT", () =>  app.bot.stop("SIGINT"));
 	process.once("SIGTERM", () => app.bot.stop("SIGTERM"));

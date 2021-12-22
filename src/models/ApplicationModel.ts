@@ -1,14 +1,14 @@
 import moment from "moment";
 import { getRepository } from "typeorm";
-import Telegram from "../../telegram";
+import App from '../../app';
 import { EGeneralStatus, EGeneralType, TApplicationTypes, TDeleteMyAppTypes, TEditAdminAppTypes, TEditMyAppTypes, TGetAllApplicationsUserTypes } from "../@types/global";
 import { Applications } from "../entity/Applications";
 import { User } from "../entity/User";
 import ErrorHandler, { EResponseCodes } from "../utils/ErrorHandler";
 import Helpers from "../utils/Helpers";
 
+const telegraf = new App([]);
 
-const telegraf = new Telegram();
 
 export default class ApplicationModel {
 	async createApplication(args: TApplicationTypes) {

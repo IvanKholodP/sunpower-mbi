@@ -5,9 +5,10 @@ import { getRepository } from 'typeorm'
 import ErrorHandler, {EResponseCodes} from '../utils/ErrorHandler';
 import { Admin } from '../entity/Admin';
 import { IUserRegistrationProps, TCreateAdminTypes } from '../@types/global';
-import Telegram from '../../telegram';
+import App from '../../app';
+// import Telegram from '../../telegram';
 
-
+const telegraf = new App([]);
 export default class RegistrationModel {
 	async createUser(args: IUserRegistrationProps) {
 		try{
@@ -41,7 +42,7 @@ export default class RegistrationModel {
 					Номер мобільного: ${args.phoneNumber}
 					Електронна пошта: ${args.email}
 				`;
-				const telegraf = new Telegram();
+				// const telegraf = new Telegram();
 				telegraf.bot.telegram.sendMessage(process.env.ADMIN_BOT_ID, botTextMessage);
 				return {result, message: 'Користувач успішно зареєстрований', errors};
 			} 
@@ -79,7 +80,7 @@ export default class RegistrationModel {
 					Прізвище: ${args.lastName}
 					Номер мобільного: ${args.phoneNumber}
 				`;
-				const telegraf = new Telegram();
+				// const telegraf = new Telegram();
 				telegraf.bot.telegram.sendMessage(process.env.ADMIN_BOT_ID, botTextMessage);
 			const result = await admin.save(adminObj);
 			return {result, message: 'Користувач успішно зареєстрований'};
