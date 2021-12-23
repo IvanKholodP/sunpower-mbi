@@ -18,11 +18,10 @@ export const AddNewAdress: React.FC = () => {
 
     const setStoreSubmitHandler = async () => {
         try {
-            const data = await request('/api/add-store', 'POST', {...store}, {
+            const data = await request('/api/add-storage', 'POST', {...store}, {
                 Authorization: `Bearer ${tokenAdmin}`
             });
             message(data.message);
-            window.location.reload();
         } catch (error) {
             throw error
         }

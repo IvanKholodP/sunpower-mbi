@@ -33,6 +33,7 @@ export const AppModal: React.FC = () => {
       commentsSales: '',
     }
   });
+  
   useEffect(() => {
     window.M.updateTextFields()
   }, [])

@@ -5,12 +5,9 @@ import { getRepository } from "typeorm";
 import { User } from "../../entity/User";
 import { Admin } from "../../entity/Admin";
 import { Applications } from "../../entity/Applications";
-import { EGeneralType } from "../../@types/global";
+import { EAdressStatus, EGeneralType } from "../../@types/global";
 import Helpers from "../Helpers";
-// import Telegram from "../../../telegram";
-// import { Adress } from "../../entity/Adress";
-
-// const telegraf = new Telegram();
+import { Adress } from "../../entity/Adress";
 
 class TelegramBot {
 	async botStart (ctx: Context) {
@@ -157,9 +154,9 @@ class TelegramBot {
 		try {
 			await ctx.replyWithHTML("<b>Адреси:</b>", Markup.inlineKeyboard([
 				[
-					Markup.button.callback("ДСВ", 'dsv'),
-					Markup.button.callback("Мінісклад", 'mini'),
-					Markup.button.callback("Офіс", 'office'),
+					Markup.button.callback("ДСВ", 'ДСВ'),
+					Markup.button.callback("Мінісклад", 'Мінісклад'),
+					Markup.button.callback("Офіс", 'Офіс'),
 			  	]])
 		  	)
 		} catch (error) {
@@ -167,26 +164,53 @@ class TelegramBot {
 		}
 	  };
 
-	
+	async adressDSV(ctx: any) {
+		try {
+			await ctx.answerCbQuery();
+			const AdressRepository = getRepository(Adress);
+			const adress = await AdressRepository.findOne({nameStore: ctx.callbackQuery.data, status: EAdressStatus.ACTIVE});
+			if(adress) {
+				const dataAdress = `${adress.adressStore}`;
+				return await ctx.reply(dataAdress);
+			} else {
+				return await ctx.reply("немає адреси")
+			}
+		} catch (error) {
+			console.error(error);
+		}
+	}
 
-	//adressAction(id_btn, text) {
-	//	telegraf.bot.action(id_btn, async (ctx: any) => {
-	//		try {
-	//			await ctx.answerCbQuery();
-	//			const AdressRepository = getRepository(Adress);
-	//			const adress = await AdressRepository.findOne({nameStore: ctx.message.text});
-	//			if(adress){
-	//				const dataAdress = `${adress.adressStore}`;
-	//				return await ctx.reply(dataAdress);
-	//			} else {
-	//				return await ctx.reply("немає адреси")
-	//			}
-	//			
-	//		} catch (e) {
-	//		  	console.error(e);
-	//		}
-	//	});
-	//}
+	async adressMini(ctx: any) {
+		try {
+			await ctx.answerCbQuery();
+			const AdressRepository = getRepository(Adress);
+			const adress = await AdressRepository.findOne({nameStore: ctx.callbackQuery.data, status: EAdressStatus.ACTIVE});
+			if(adress) {
+				const dataAdress = `${adress.adressStore}`;
+				return await ctx.reply(dataAdress);
+			} else {
+				return await ctx.reply("немає адреси")
+			}
+		} catch (error) {
+			console.error(error);
+		}
+	}
+
+	async adressOffice(ctx: any) {
+		try {
+			await ctx.answerCbQuery();
+			const AdressRepository = getRepository(Adress);
+			const adress = await AdressRepository.findOne({nameStore: ctx.callbackQuery.data, status: EAdressStatus.ACTIVE});
+			if(adress) {
+				const dataAdress = `${adress.adressStore}`;
+				return await ctx.reply(dataAdress);
+			} else {
+				return await ctx.reply("немає адреси")
+			}
+		} catch (error) {
+			console.error(error);
+		}
+	}
 }
 
 

@@ -1,10 +1,9 @@
 import { Router, Request, Response } from "express";
 import AdressModel from "../models/AdressModel";
-import ErrorHandler, { EResponseCodes } from "../utils/ErrorHandler";
 import GeneralController from "./GeneralController";
 
 export default class GetAdressController extends GeneralController {
-	readonly path = '/api/get-store';
+	readonly path = '/api/get-storage';
 	public router = Router();
 
 	constructor(){

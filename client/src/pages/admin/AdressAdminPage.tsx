@@ -18,7 +18,7 @@ const AdressAdminPage: React.FC = () => {
 
 	const fetchAdress = useCallback(async () => {
 	try {
-		const fetched = await request('/api/get-store', 'GET', null, {
+		const fetched = await request('/api/get-storage', 'GET', null, {
 			Authorization: `Bearer ${tokenAdmin}`
 		});
 		setAdresses(fetched);
@@ -68,11 +68,11 @@ const AdressAdminPage: React.FC = () => {
 		setEditAdressId(null);
 
 		try {
-			const data = await request('/api/change-store', 'PUT', {...editedAdress}, {
+			const data = await request('/api/change-storage', 'PUT', {...editedAdress}, {
 				Authorization: `Bearer ${tokenAdmin}`
 			  })
 			message(data.message);
-			window.location.reload()
+			window.location.reload();
 		} catch (error) {
 			console.log(error)
 		}
@@ -85,10 +85,11 @@ const AdressAdminPage: React.FC = () => {
 		try {
 			const shoudRemove = confirm('Ви дійсно хочете видалити дану адресу?')
 			if (shoudRemove) {
-				const data = await request('/api/delete-store', 'PUT', {...deleteAdressId}, {
+				const data = await request('/api/delete-storage', 'PUT', {...deleteAdressId}, {
 					Authorization: `Bearer ${tokenAdmin}`
 				});
 				message(data.message);
+				window.location.reload();
 			}
 		} catch (error) {
 			console.log(error)

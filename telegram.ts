@@ -17,7 +17,6 @@ class Telegram {
 
 	public launch() {
 		const telegram = new TelegramBot();
-		//this.bot.telegram.setWebhook(`${process.env.URL}/bot/${this.bot.secretPathComponent()}`);
 		const triggersRate = ["курс", "Курс", "Бот курс валют", "Бот дай курс", "Бот дай курс валют" ];
 		const triggersGetApps = ['мої заявки', 'Мої заявки', 'Бот мої заявки']
 
@@ -32,7 +31,9 @@ class Telegram {
 		this.bot.on("contact", telegram.getContact);
 		this.bot.on('text', telegram.getAppData);
 		this.bot.on("text", telegram.notExist);
-		//this.bot.startWebhook(`/bot${this.bot.secretPathComponent()}`, null, 3000)
+		this.bot.action('ДСВ', telegram.adressDSV);
+		this.bot.action('Мінісклад', telegram.adressMini);
+		this.bot.action('Офіс', telegram.adressOffice);
 		this.bot.launch()
 	}
 }

@@ -56,3 +56,13 @@ export interface IAdressProps {
 	nameStore: string,
 	adressStore: string,
 }
+
+export interface IAddProductProps {
+	type: string,
+	producer: string,
+	series: string,
+	power: string,
+	free: string,
+	actualy: string,
+	comments: string
+}

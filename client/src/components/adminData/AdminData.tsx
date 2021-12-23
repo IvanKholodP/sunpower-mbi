@@ -18,6 +18,8 @@ export const AdminData: React.FC<{admin: IAdminProps}> = ({admin}) => {
 					</div>
 				</li>
 				<li><div className="divider"></div></li>
+				<li><NavLink className="waves-effect waves-light" to="/availability">Наявність</NavLink></li>
+				<li><div className="divider"></div></li>
 				<li><NavLink className="waves-effect waves-light" to="/adress">Адреси</NavLink></li>
 				<li><div className="divider"></div></li>
 				<li><NavLink className="waves-effect waves-light" to="/workers">Workers</NavLink></li>

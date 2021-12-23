@@ -14,6 +14,10 @@ export enum EAdressStatus {
 	DELETED=0,
 	ACTIVE=1,
 }
+export enum EProductType {
+	SOLAR='solar',
+	OTHER='other'
+}
 
 export interface IUserRegistrationProps {
 	firstName: string,
@@ -98,8 +102,16 @@ export type TAddNewAdressTypes = {
 	adressStore: string
 };
 
-export type TEditAdressTypes = {
+
+export type TGetdressTypes = {
 	nameStore: string,
 	adressStore: string,
 	adressId: number
+};
+
+export type TEditAdressTypes = {
+	nameStore: string,
+	adressStore: string,
+	adressId: number,
+	status: number
 };
