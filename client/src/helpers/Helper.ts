@@ -1,6 +1,6 @@
 //eslint-disable-next-line
 export default new class Helper  {
-	setAppStatusColor (status: number): string {
+	setAppStatusColor(status: number): string {
 		switch(status){
 			case 2:
 				return 'yellow';
@@ -13,7 +13,7 @@ export default new class Helper  {
 		}
 	}
 
-	setAppStatus (status: number): string {
+	setAppStatus(status: number): string {
 		switch(status) {
 			case 1:
 				return 'Очікує відправки';
@@ -25,6 +25,17 @@ export default new class Helper  {
 				return 'Відмінена';
 			default:
 				return 'Очікує відправки';
+		}
+	}
+
+	setNameProduct(name: string): string {
+		switch(name) {
+			case 'solar':
+				return 'Модуль';
+			case 'other':
+				return 'Товар';
+			default:
+				return 'Модуль';
 		}
 	}
 }

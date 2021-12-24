@@ -1,19 +1,19 @@
 import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
-import { EGeneralType, EProductType } from "../@types/global";
+import { EGeneralType } from "../@types/global";
 
 @Entity({name: 'product'})
 export class Products {
     @PrimaryGeneratedColumn()
-    productId: number;
+    productId?: number;
 
     @Column()
-    type: EProductType;
+    type: string;
 
     @Column()
     producer: string;
 
-    @Column({type: 'bigint'})
-    series: number;
+    @Column({type: 'varchar'})
+    series: string;
 
     @Column({type: 'bigint'})
     power: number;

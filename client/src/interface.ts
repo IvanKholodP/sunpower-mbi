@@ -66,3 +66,15 @@ export interface IAddProductProps {
 	actualy: string,
 	comments: string
 }
+
+export interface IGetProductsProps {
+	productId: number,
+	type: string,
+	producer: string,
+	series: string,
+	power: number,
+	free: number,
+	actualy: number,
+	comments: string,
+	kWt?: number,
+}

@@ -1,5 +1,5 @@
 import React from 'react';
-import { AddNewProduct } from '../../components/adminData/AddNewProduct';
+import { AddNewProduct } from '../../components/addNewProduct/AddNewProduct';
 
 const AvailablAdminPage: React.FC = () => {
     return(

@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Loader } from '../../components/loader/Loader';
+import { Loader } from '../loader/Loader';
 import { AuthContext } from '../../context/authContext';
 import { useHttp } from '../../hooks/httpHook';
 import { useMessage } from '../../hooks/messageHook';
@@ -69,7 +69,7 @@ export const AddNewProduct: React.FC = () => {
                     <input 
                         name="series"
                         id="series" 
-                        type="number" 
+                        type="text" 
                         className="validate"
                         value={product.series}
                         onChange={addProductChangeHandler}

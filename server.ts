@@ -3,6 +3,7 @@ dotenv.config();
 import App from "./app";
 import AddAdressController from './src/controllers/AddAdressController';
 import AddApplicationController from './src/controllers/AddApplicationController';
+import AddProductController from './src/controllers/AddProductController';
 import AddWorkerController from "./src/controllers/AddWorkerController";
 import AuthAdminController from './src/controllers/AuthAdminController';
 import AuthUserController from "./src/controllers/AuthUserController";
@@ -15,6 +16,7 @@ import GetAdressUserController from './src/controllers/GetAdressUserController';
 import GetApplicationsController from './src/controllers/GetApplicationsController';
 import GetMyAppsController from './src/controllers/GetMyAppsController';
 import GetUserController from "./src/controllers/GetUserController";
+import GetUserProductsController from './src/controllers/GetUserProductsController';
 import PutAdressController from './src/controllers/PutAdminAdressController';
 import PutAdminAppController from './src/controllers/PutAdminAppController';
 import PutMyAppController from './src/controllers/PutMyAppController';
@@ -34,6 +36,7 @@ function init() {
 		new GetAdressUserController(),
 		new GetApplicationsController(),
 		new GetMyAppsController(),
+		new GetUserProductsController(),
 
 		new AddWorkerController(),
 		new AddApplicationController(),
@@ -51,6 +54,7 @@ function init() {
 		new GetAdressController(),
 
 		new AddAdressController(),
+		new AddProductController(),
 
 		new PutAdminAppController(),
 		new PutAdressController(),

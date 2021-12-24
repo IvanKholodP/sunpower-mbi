@@ -22,4 +22,8 @@ export default new class Helpers  {
 				return comments;
 		}
 	}
+
+	calculateFreeKWt(power: number, free: number): number {
+		return (power * free) / 1000;
+	}
 }

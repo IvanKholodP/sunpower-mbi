@@ -38,8 +38,7 @@ class TelegramBot {
 				Я твій помічник для роботи.
 				Щоб дізнатись про мої команди, натисни /help або скористайся меню.
 			`);
-			}
-			if (administrator) {
+			} else if (administrator) {
 				administrator.botId = ctx.message.contact.user_id;
 				await admin.save(administrator);
 				await ctx.reply(`
@@ -47,6 +46,8 @@ class TelegramBot {
 				Я твій помічник для роботи.
 				Щоб дізнатись про мої команди, натисни /help або скористайся меню.
 			`);
+			} else {
+				await ctx.reply('Ви не є авторизованим користувачем')
 			}
 		} catch (error) {
 			console.error(error);
@@ -63,17 +64,25 @@ class TelegramBot {
 
 	async getRate(ctx: Context) {
 		try {
-			const response = await fetch("https://api.monobank.ua/bank/currency");
-			const body = await response.json();
-			const USD = body.find((el) => Number(el.currencyCodeA) === 840);
-			const EUR = body.find((el) => Number(el.currencyCodeA) === 978);
-			const cross = body.find((el) => Number(el.currencyCodeA) === 978 && Number(el.currencyCodeB) === 840);
-			const formatData = `
-				Buy / Sell
-				EUR/USD: ${cross.rateBuy} / ${cross.rateSell},
-				USD: ${USD.rateBuy} / ${USD.rateSell},
-				EUR: ${EUR.rateBuy} / ${EUR.rateSell},`;
-			await ctx.reply(formatData);
+			const user = getRepository(User);
+			const admin = getRepository(Admin);
+			const candidat: User = await user.findOne({botId: ctx.message.from.id})
+			const administrator: Admin = await admin.findOne({botId: ctx.message.from.id})
+			if (candidat || administrator) {
+				const response = await fetch("https://api.monobank.ua/bank/currency");
+				const body = await response.json();
+				const USD = body.find((el) => Number(el.currencyCodeA) === 840);
+				const EUR = body.find((el) => Number(el.currencyCodeA) === 978);
+				const cross = body.find((el) => Number(el.currencyCodeA) === 978 && Number(el.currencyCodeB) === 840);
+				const formatData = `
+					Buy / Sell
+					EUR/USD: ${cross.rateBuy} / ${cross.rateSell},
+					USD: ${USD.rateBuy} / ${USD.rateSell},
+					EUR: ${EUR.rateBuy} / ${EUR.rateSell},`;
+				await ctx.reply(formatData);
+			} else {
+				await ctx.reply("У вас немає доступу до даної команди");
+			}			
 		} catch (error) {
 			await ctx.reply('Запит можна зробити один раз протягом хвилини')
 			console.error(error);
@@ -90,32 +99,39 @@ class TelegramBot {
 
 	async getAppData(ctx: any, next: Function) {
 		try {
-			const AppRepository = getRepository(Applications);
-			if (Number(ctx.message.text)) {
-				const appData = await AppRepository.findOne({appId: ctx.message.text});
-				if (appData) {
-					if (appData.type) {
-						const formatAppData = `
-						Дані заявки №${appData.appId}:
-							Статус: ${Helpers.setAppStatus(appData.status)}
-							Коментар логіста: ${Helpers.deleteNullFromMessage(appData.commentsLogist)}
-							Дата доставки: ${appData.deliverPlaning}
-							Вантаж: ${appData.goods}
-							Спосіб доставки: ${appData.sendMethod}
-							Адреса отримувача: ${appData.city}
-							Дані отримувача: ${appData.recipientData}
-							Платник: ${appData.payer}
-							Коментар менеджера: ${appData.commentsSales}
-							`;
-						return await ctx.reply(formatAppData);
-					} 
-					return await ctx.reply("Заявка була видалена");
+			const user = getRepository(User);
+			const admin = getRepository(Admin);
+			const candidat: User = await user.findOne({botId: ctx.message.from.id})
+			const administrator: Admin = await admin.findOne({botId: ctx.message.from.id})
+			if (candidat || administrator) {
+				const AppRepository = getRepository(Applications);
+				if (Number(ctx.message.text)) {
+					const appData = await AppRepository.findOne({appId: ctx.message.text});
+					if (appData) {
+						if (appData.type) {
+							const formatAppData = `
+							Дані заявки №${appData.appId}:
+								Статус: ${Helpers.setAppStatus(appData.status)}
+								Коментар логіста: ${Helpers.deleteNullFromMessage(appData.commentsLogist)}
+								Дата доставки: ${appData.deliverPlaning}
+								Вантаж: ${appData.goods}
+								Спосіб доставки: ${appData.sendMethod}
+								Адреса отримувача: ${appData.city}
+								Дані отримувача: ${appData.recipientData}
+								Платник: ${appData.payer}
+								Коментар менеджера: ${appData.commentsSales}
+								`;
+							return await ctx.reply(formatAppData);
+						} 
+						return await ctx.reply("Заявка була видалена");
+					}
+					return await ctx.reply("Заявки не існує");
+				} else {
+					next()
 				}
-				return await ctx.reply("Заявки не існує");
 			} else {
-				next()
-			}
-
+				await ctx.reply("У вас немає доступу до даної команди");
+			}	
 		} catch (error) {
 			console.error(error);
 		}
@@ -143,7 +159,7 @@ class TelegramBot {
 				}
 				return await ctx.reply("У Вас немає активних заявок");
 			}
-			return await ctx.reply("У вас немає доступу да даної команди");
+			return await ctx.reply("У вас немає доступу до даної команди");
 		} catch (error) {
 			console.error(error);
 		}
@@ -152,13 +168,21 @@ class TelegramBot {
 
 	async adressButton(ctx: Context) {
 		try {
-			await ctx.replyWithHTML("<b>Адреси:</b>", Markup.inlineKeyboard([
-				[
-					Markup.button.callback("ДСВ", 'ДСВ'),
-					Markup.button.callback("Мінісклад", 'Мінісклад'),
-					Markup.button.callback("Офіс", 'Офіс'),
-			  	]])
-		  	)
+			const user = getRepository(User);
+			const admin = getRepository(Admin);
+			const candidat: User = await user.findOne({botId: ctx.message.from.id})
+			const administrator: Admin = await admin.findOne({botId: ctx.message.from.id})
+			if (candidat || administrator) {
+				await ctx.replyWithHTML("<b>Адреси:</b>", Markup.inlineKeyboard([
+					[
+						Markup.button.callback("ДСВ", 'ДСВ'),
+						Markup.button.callback("Мінісклад", 'Мінісклад'),
+						Markup.button.callback("Офіс", 'Офіс'),
+					]])
+				)
+			} else {
+				await ctx.reply("У вас немає доступу до даної команди");
+			}
 		} catch (error) {
 		  console.error(error);
 		}

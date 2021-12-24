@@ -115,3 +115,25 @@ export type TEditAdressTypes = {
 	adressId: number,
 	status: number
 };
+
+export type TCreateProductTypes = {
+	type: string,
+	producer: string,
+	series: string,
+	power: number,
+	free: number,
+	actualy: number,
+	comments: string,
+};
+
+export type TGetProductTypes = {
+	productId: number,
+	type: string,
+	producer: string,
+	series: string,
+	power: number,
+	free: number,
+	actualy: number,
+	comments: string,
+	kWt?: number,
+};
