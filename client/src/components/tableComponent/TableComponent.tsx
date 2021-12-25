@@ -8,7 +8,7 @@ export const TableComponent: React.FC<{app: IGetMyApps, handleEditClick: any, ha
 		<tr key={app.appId} >	
 			<td style={{textAlign: 'center'}}>{app.appId}</td>					
 			<td style={{backgroundColor: Helper.setAppStatusColor(app.status)}}>{app.commentsLogist}</td>
-			<td>{moment.utc(app.createAt).add(2, 'hours').format('YYYY-MM-DD HH:mm:ss')}</td>
+			<td>{moment.utc(app.createAt).add(2, 'hours').format('DD.MM.YYYY HH:mm:ss')}</td>
 			<td>{app.deliverPlaning}</td>
 			<td>{app.goods}</td>
 			<td>{app.sendMethod}</td>
@@ -21,16 +21,15 @@ export const TableComponent: React.FC<{app: IGetMyApps, handleEditClick: any, ha
 					type="button"
 					className="btn"
 					onClick={(event: React.BaseSyntheticEvent) => {event.preventDefault(); handleEditClick(event, app)}}
-				>
-					Змінити
+				><i className="large material-icons">mode_edit</i>
 				</button>
 				<button
 					type="button"
-					className="btn"
+					className="btn red darken-3"
 					onClick={(event: React.BaseSyntheticEvent) => {event.preventDefault(); handleDeleteClick(event, app)}}
-				>
-					Видалити
+				><i className="large material-icons">delete_forever</i>
 				</button>
-     		</td>
-		</tr>)
+			</td>
+		</tr>
+	)
 }

@@ -1,7 +1,6 @@
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../context/authContext";
 import { useHttp } from "../../hooks/httpHook";
-import { useMessage } from "../../hooks/messageHook";
 import { IAdressProps, IGetProductsProps } from "../../interface";
 import qr from '../../../src/qr-code.svg'
 import Helper from "../../helpers/Helper";
@@ -10,8 +9,7 @@ import Helper from "../../helpers/Helper";
 const WorkerUserPage: React.FC = () => {
 	const [adresses, setAdresses] = useState<IAdressProps[]>([]);
 	const [products, setProducts] = useState<IGetProductsProps[]>([]);
-    const message = useMessage();
-    const {loading, request} = useHttp();
+    const { request } = useHttp();
 	const {token} = useContext(AuthContext);
     const fetchAdress = useCallback(async () => {
         try {
@@ -63,11 +61,11 @@ const WorkerUserPage: React.FC = () => {
 									<tr key={product.productId}>
 										<td>{Helper.setNameProduct(product.type)}</td>
 										<td>{product.producer} {product.series}</td>
-										<td style={{textAlign: 'center'}}>{product.power}</td>
-										<td style={{textAlign: 'center', color: 'green'}}>{product.free}</td>
+										<td style={{textAlign: 'center', color: 'blue', fontWeight: 'bold'}}>{product.power}</td>
+										<td style={{textAlign: 'center', color: 'green', fontWeight: 'bold'}}>{product.free}</td>
 										<td style={{textAlign: 'center', fontWeight: 'bold'}}>{product.actualy}</td>
 										<td style={{textAlign: 'center'}}>{product.comments}</td>
-										<td style={{textAlign: 'center', color: 'green'}}>{product.kWt}</td>
+										<td style={{textAlign: 'center', color: 'green', fontWeight: 'bold'}}>{product.kWt}</td>
 									</tr>
 								)
 							})}

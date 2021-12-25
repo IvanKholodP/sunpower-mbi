@@ -21,7 +21,7 @@ const DashboardAdminPage: React.FC = () => {
 	const [selectedOptionYear, setSelectedOptionYear] = useState<String>(yearNow);
 	const [editFormData, setEditFormData] = useState({
 		deliverPlaning: '', goods: '', sendMethod: '', city: '', recipientData: '', payer: '', commentsSales: '', updateAt: '', year: '', month: '', appId: '', commentsLogist: '', status: ''
-	  });
+	});
 	const [editAppId, setEditAppId] = useState(null);  
 	const {loading, request} = useHttp();
 	const {tokenAdmin} = useContext(AuthContext);
@@ -72,7 +72,7 @@ const DashboardAdminPage: React.FC = () => {
 		} else {
 			message("Заявку в процесі не можливо змінити");
 		}
-	  };
+	};
 
 
 	const handleEditFormChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -100,9 +100,9 @@ const DashboardAdminPage: React.FC = () => {
 		try {
 			const data = await request('/api/dashboard-change-app', 'PUT', {...editedApp}, {
 				Authorization: `Bearer ${auth.tokenAdmin}`
-			  })
+			})
+			window.location.reload();
 			message(data.message);
-			window.location.reload()
 		} catch (error) {
 			console.log(error)
 		}
@@ -167,7 +167,7 @@ const DashboardAdminPage: React.FC = () => {
 			</div>
 			<div>
 				<form onSubmit={handleEditFormSubmit}> 
-					<table>
+					<table className="highlight">
 						<thead>
 							<tr key={Math.random()}>
 								<th>№ заявки</th>

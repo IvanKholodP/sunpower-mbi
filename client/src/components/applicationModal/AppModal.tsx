@@ -93,8 +93,9 @@ export const AppModal: React.FC = () => {
           form.sendMethod.length > 0 && form.city.length > 0 && form.recipientData.length > 0 )) {
           const data = await request('/api/add_application', 'POST', {...form}, {
             Authorization: `Bearer ${auth.token}`
-          })
+          });
           message(data.data.message);
+          setTimeout(()=>window.location.reload(), 2000);
         } else {
           message('Заявку не добавлено');
         }

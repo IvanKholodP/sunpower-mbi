@@ -8,6 +8,7 @@ import moment from 'moment';
 
 const monthNow = (moment().month() + 1).toString();
 const yearNow = moment().year().toString();
+const monthNowNumberType = moment().month() + 1;
 
 
 const ApplicationsUserPage: React.FC = () => {
@@ -18,12 +19,11 @@ const ApplicationsUserPage: React.FC = () => {
 	const [selectedOptionMonth, setSelectedOptionMonth] = useState<String>(monthNow);
 	const [selectedOptionYear, setSelectedOptionYear] = useState<String>(yearNow);
 
-	const selectChangeMonth = (event: React.ChangeEvent<HTMLSelectElement>) => setSelectedOptionMonth(event.target.value);
-	const selectChangeYear = (event: React.ChangeEvent<HTMLSelectElement>) => setSelectedOptionYear(event.target.value);
 	const uniqeMonths: number[] = Array.from(new Set(applications.map((app: any) => app.month))).sort((a: number, b: number)=> {return a - b});
 	const uniqeYears: number[] = Array.from(new Set(applications.map((app: any) => app.year))).sort((a: number, b: number)=> {return a - b});
-	console.log('uniqeMonths', uniqeMonths)
-	console.log('uniqeYears', uniqeYears)
+
+	const selectChangeMonth = (event: React.ChangeEvent<HTMLSelectElement>) =>{event.preventDefault(); setSelectedOptionMonth(event.target.value)};
+	const selectChangeYear = (event: React.ChangeEvent<HTMLSelectElement>) => setSelectedOptionYear(event.target.value);
 
 	const fetchApplications = useCallback(async([])=>{
 		try {
@@ -40,7 +40,7 @@ const ApplicationsUserPage: React.FC = () => {
 	}, [fetchApplications])
 
 	useEffect(() => {
-    	window.M.AutoInit();
+		window.M.AutoInit();
 	}, [uniqeMonths]);
 
 
@@ -52,11 +52,11 @@ const ApplicationsUserPage: React.FC = () => {
 	return(
 		<div className="col s12">
 			<div className="input-field col s3">
-				<select onChange={selectChangeMonth} defaultValue={monthNow}>
+				<select onChange={selectChangeMonth} defaultValue={monthNow.toString()} >
 					{uniqeMonths.map((month: number) => {
 						return (
 							<>
-								<option value={month.toString()} >
+								<option value={month.toString()} selected={(monthNowNumberType === month) ? true : false}  >
 									{moment().month(month - 1).format("MMMM")}
 								</option>
 							</>
@@ -80,7 +80,7 @@ const ApplicationsUserPage: React.FC = () => {
 					<label>Виберіть рік</label>
 				</div>
 			<div>
-				<table>
+				<table className="highlight">
 					<thead>
 						<tr>
 							<th>№ заявки</th>
@@ -103,7 +103,7 @@ const ApplicationsUserPage: React.FC = () => {
 									<tr key={app.appId} >
 										<td style={{textAlign:'center', backgroundColor: Helper.setAppStatusColor(app.status)}}>{app.appId}</td>
 										<td>{app.commentsLogist}</td>
-										<td>{moment.utc(app.createAt).add(2, 'hours').format('YYYY-MM-DD HH:mm:ss')}</td>
+										<td>{moment.utc(app.createAt).add(2, 'hours').format('DD.MM.YYYY HH:mm:ss')}</td>
 										<td>{app.deliverPlaning}</td>
 										<td>{`${app.firstName} ${app.lastName}`}</td>
 										<td>{app.goods}</td>

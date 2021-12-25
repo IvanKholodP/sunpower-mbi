@@ -76,5 +76,6 @@ export interface IGetProductsProps {
 	free: number,
 	actualy: number,
 	comments: string,
+	status: number,
 	kWt?: number,
 }

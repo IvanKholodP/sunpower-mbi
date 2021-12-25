@@ -9,8 +9,10 @@ import AuthAdminController from './src/controllers/AuthAdminController';
 import AuthUserController from "./src/controllers/AuthUserController";
 import DeleteAdressController from './src/controllers/DeleteAdminAdressController';
 import DeleteMyAppController from './src/controllers/DeleteMyAppController';
+import DeleteProductController from './src/controllers/DeleteProductController';
 import GetAdminApplicationsController from './src/controllers/GetAdminApplicationsControllers';
 import GetAdminController from './src/controllers/GetAdminController';
+import GetAdminProductsController from './src/controllers/GetAdminProductsController';
 import GetAdressController from './src/controllers/GetAdressController';
 import GetAdressUserController from './src/controllers/GetAdressUserController';
 import GetApplicationsController from './src/controllers/GetApplicationsController';
@@ -19,6 +21,7 @@ import GetUserController from "./src/controllers/GetUserController";
 import GetUserProductsController from './src/controllers/GetUserProductsController';
 import PutAdressController from './src/controllers/PutAdminAdressController';
 import PutAdminAppController from './src/controllers/PutAdminAppController';
+import PutProductController from './src/controllers/PutAdminProductController';
 import PutMyAppController from './src/controllers/PutMyAppController';
 import RegistrationAdminController from './src/controllers/RegistrationAdminController';
 import RegistrationUser from "./src/controllers/RegistrationUserController";
@@ -52,14 +55,17 @@ function init() {
 		new GetAdminApplicationsController(),
 		new GetAdminController(),
 		new GetAdressController(),
+		new GetAdminProductsController(),
 
 		new AddAdressController(),
 		new AddProductController(),
 
 		new PutAdminAppController(),
 		new PutAdressController(),
+		new PutProductController(),
 
-		new DeleteAdressController()
+		new DeleteAdressController(),
+		new DeleteProductController()
 	]);
 
 	const telegram = new Telegram();

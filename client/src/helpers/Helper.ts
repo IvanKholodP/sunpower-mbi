@@ -32,8 +32,10 @@ export default new class Helper  {
 		switch(name) {
 			case 'solar':
 				return 'Модуль';
+			case 'invertor':
+				return 'Інвертор';
 			case 'other':
-				return 'Товар';
+				return 'Інше';
 			default:
 				return 'Модуль';
 		}

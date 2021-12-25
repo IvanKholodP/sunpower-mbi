@@ -5,7 +5,7 @@ import Helper from "../../helpers/Helper";
 export const EditAdminApp: React.FC<{editFormData: any, handleEditFormChange: any, handleCancelClick: any}> = ({editFormData, handleEditFormChange, handleCancelClick}) => {
 	return(
 		<tr key={editFormData.appId} >
-            <td style={{backgroundColor: Helper.setAppStatusColor(editFormData.status), textAlign: 'center'}}>
+			<td style={{backgroundColor: Helper.setAppStatusColor(editFormData.status), textAlign: 'center'}}>
 				<span>{editFormData.appId}</span>
 			</td>
 			<td>
@@ -20,7 +20,7 @@ export const EditAdminApp: React.FC<{editFormData: any, handleEditFormChange: an
 				</select>
 			</td>
 			<td>
-                <input 
+				<input 
 					name="commentsLogist"  
 					type="text" 
 					value={editFormData.commentsLogist}
@@ -31,25 +31,25 @@ export const EditAdminApp: React.FC<{editFormData: any, handleEditFormChange: an
 				<span>{editFormData.updateAt}</span>
 			</td>
 			<td>
-                <span>{editFormData.deliverPlaning}</span>
+				<span>{editFormData.deliverPlaning}</span>
 			</td>
 			<td>
-                <span>{editFormData.goods}</span>
+				<span>{editFormData.goods}</span>
 			</td>
 			<td>
-                <span>{editFormData.sendMethod}</span>
+				<span>{editFormData.sendMethod}</span>
 			</td>
 			<td>
-                <span>{editFormData.city}</span>
+				<span>{editFormData.city}</span>
 			</td>
 			<td>
-                 <span>{editFormData.recipientData}</span>
+				<span>{editFormData.recipientData}</span>
 			</td>
 			<td>
-                <span>{editFormData.payer}</span>
+				<span>{editFormData.payer}</span>
 			</td>
 			<td>
-                <span>{editFormData.commentsSales}</span>
+				<span>{editFormData.commentsSales}</span>
 			</td>
 			<td>
 				<button 
@@ -59,7 +59,7 @@ export const EditAdminApp: React.FC<{editFormData: any, handleEditFormChange: an
 				</button>
 				<button
 					type="button"
-					className="btn"
+					className="btn grey"
 					onClick={handleCancelClick}
 				><i className="large material-icons">cancel</i>
 				</button>

@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Loader } from '../loader/Loader';
 import { AuthContext } from '../../context/authContext';
 import { useHttp } from '../../hooks/httpHook';
 import { useMessage } from '../../hooks/messageHook';
@@ -38,10 +37,10 @@ export const AddNewProduct: React.FC = () => {
     }, []);
 
     return (
-        <div className="row">
-            <h3>Добавити продукт</h3>
-            <div className='row'>
-                <div className="input-field col s1">
+        <div className="container">
+            <h3 className='center-align'>Добавити продукт</h3>
+            <div className='row center'>
+                <div className="input-field col s2">
                     <select
                         name='type'
                         id="type"
@@ -50,11 +49,12 @@ export const AddNewProduct: React.FC = () => {
                         onChange={addProductChangeHandler}
                         >
                         <option value="solar">Модуль</option>
-                        <option value="other">Продукт</option>
+                        <option value="invertor">Invertor</option>
+                        <option value="other">Інше</option>
                     </select>
                     <label htmlFor="type">Тип товару</label>
                 </div>
-                <div className="input-field col s2">
+                <div className="input-field col s3">
                     <input 
                         name="producer"
                         id="producer" 
@@ -65,7 +65,7 @@ export const AddNewProduct: React.FC = () => {
                     />
                     <label htmlFor="producer">Виробник</label>
                 </div>
-                <div className="input-field col s1">
+                <div className="input-field col s2">
                     <input 
                         name="series"
                         id="series" 

@@ -75,8 +75,9 @@ export default class ApplicationModel {
 					updateAt: item.updateAt,
 					commentsLogist: item.commentsLogist
 				})
-			})
-			return allApp;
+			});
+			const sortAllApp = allApp.sort((a, b)=> b.appId - a.appId);
+			return sortAllApp;
 		} catch (error) {
 			return new ErrorHandler(EResponseCodes.AUTH_ERROR);
 		}
@@ -86,7 +87,8 @@ export default class ApplicationModel {
 		try {
 			const applications = getRepository(Applications);
 			const myActiveApps = await applications.find({where: {type: EGeneralType.ACTIVE, user: args}});
-			return myActiveApps;
+			const sortMyApps = myActiveApps.sort((a, b)=> b.appId - a.appId);
+			return sortMyApps;
 		} catch (error) {
 			return new ErrorHandler(EResponseCodes.AUTH_ERROR);
 		}
@@ -132,7 +134,7 @@ export default class ApplicationModel {
 			if (args.status != EGeneralStatus.OPEN){
 				return {message: 'Заявку не можливо видалити'}
 			}
-			removeApp.updateAt = args.updateAt;
+			// removeApp.updateAt = args.updateAt;
 			removeApp.type = EGeneralType.DELETED;
 			const result = await application.save(removeApp);
 			const botTextMessage = `

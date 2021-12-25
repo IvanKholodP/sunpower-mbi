@@ -71,15 +71,14 @@ export const EditMyApp: React.FC<{editFormData: any, handleEditFormChange: any, 
 			<td>
 				<button 
 					type="submit" 
-					className="btn">
-						Зберегти
+					className="btn green">
+					<i className="large material-icons">save</i>
 				</button>
 				<button
 					type="button"
-					className="btn"
+					className="btn grey"
 					onClick={handleCancelClick}
-				>
-					Назад
+				><i className="large material-icons">cancel</i>
 				</button>
 			</td>
 		</tr>

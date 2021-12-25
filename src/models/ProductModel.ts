@@ -1,5 +1,5 @@
 import { getRepository } from "typeorm";
-import { TCreateProductTypes, EGeneralType, TGetProductTypes, TGetdressTypes, EProductType } from "../@types/global";
+import { TCreateProductTypes, EGeneralType, TGetProductTypes, TGetdressTypes, EProductType, TEditProductTypes } from "../@types/global";
 import { Products } from "../entity/Products";
 import ErrorHandler, { EResponseCodes } from "../utils/ErrorHandler";
 import Helpers from "../utils/Helpers";
@@ -50,6 +50,32 @@ export default class ProductModel {
             const sortProduct = productObj.sort((a, b)=> a.power - b.power);
             const result = sortProduct;
             return result;
+        } catch (error) {
+            return new ErrorHandler(EResponseCodes.AUTH_ERROR);
+        }
+    }
+
+    async editProduct(args: TEditProductTypes) {
+        try {
+            const productRepository = getRepository(Products);
+            const newProduct = await productRepository.findOne({productId: args.productId});
+            newProduct.free = args.free;
+            newProduct.actualy = args.actualy;
+            newProduct.comments = args.comments;
+            const result = await productRepository.save(newProduct);
+            return {result, message: ' Продукт успішно змінено'}
+        } catch (error) {
+            return new ErrorHandler(EResponseCodes.AUTH_ERROR);
+        }
+    }
+
+    async deleteProduct(args: TEditProductTypes) {
+        try {
+            const productRepository = getRepository(Products);
+            const deleteProduct = await productRepository.findOne({productId: args.productId});
+            deleteProduct.status = EGeneralType.DELETED;
+            const result = await productRepository.save(deleteProduct);
+            return {result, message: ' Продукт успішно видалено'}
         } catch (error) {
             return new ErrorHandler(EResponseCodes.AUTH_ERROR);
         }

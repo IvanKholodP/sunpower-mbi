@@ -137,3 +137,10 @@ export type TGetProductTypes = {
 	comments: string,
 	kWt?: number,
 };
+
+export type TEditProductTypes = {
+	productId: number,
+	free: number,
+	actualy: number,
+	comments: string,
+};

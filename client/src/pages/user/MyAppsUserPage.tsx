@@ -107,9 +107,8 @@ const MyAppsUserPage: React.FC = () => {
 		try {
 			const data = await request('/api/change_myApp', 'PUT', {...editedApp}, {
 				Authorization: `Bearer ${auth.token}`
-			  })
+			})
 			message(data.message);
-			window.location.reload();
 		} catch (error) {
 			console.log(error)
 		}
@@ -172,7 +171,7 @@ const MyAppsUserPage: React.FC = () => {
 			</div>
 			<div>
 				<form onSubmit={handleEditFormSubmit}> 
-					<table>
+					<table className="highlight">
 						<thead>
 							<tr key={Math.random()}>
 								<th>№ заявки</th>
