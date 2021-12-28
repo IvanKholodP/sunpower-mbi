@@ -8,7 +8,8 @@ import moment from 'moment';
 
 const monthNow = (moment().month() + 1).toString();
 const yearNow = moment().year().toString();
-const monthNowNumberType = moment().month() + 1;
+const monthNowNumberType: number = moment().month() + 1;
+const yearNowNumberType: number = moment().year();
 
 
 const ApplicationsUserPage: React.FC = () => {
@@ -56,7 +57,7 @@ const ApplicationsUserPage: React.FC = () => {
 					{uniqeMonths.map((month: number) => {
 						return (
 							<>
-								<option value={month.toString()} selected={(monthNowNumberType === month) ? true : false}  >
+								<option value={month.toString()} selected={(monthNowNumberType === month) ? true : false} >
 									{moment().month(month - 1).format("MMMM")}
 								</option>
 							</>
@@ -70,7 +71,7 @@ const ApplicationsUserPage: React.FC = () => {
 						{uniqeYears.map((year: number) => {
 							return (
 								<>
-									<option value={year}>
+									<option value={year} selected={(yearNowNumberType === year) ? true : false}>
 										{year}
 									</option>
 								</>

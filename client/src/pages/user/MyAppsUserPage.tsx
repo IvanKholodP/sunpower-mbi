@@ -10,6 +10,8 @@ import { useMessage } from "../../hooks/messageHook";
 
 const monthNow = (moment().month() + 1).toString();
 const yearNow = moment().year().toString();
+const monthNowNumberType: number = moment().month() + 1;
+const yearNowNumberType: number = moment().year();
 
 declare let confirm: (question: string) => boolean;
 
@@ -151,7 +153,7 @@ const MyAppsUserPage: React.FC = () => {
 				<select defaultValue={monthNow} onChange={selectChangeMonth} >
 					{uniqeMonths.map((month: number) => {
 						return (
-							<option key={Math.random()} value={month}>
+							<option key={Math.random()} value={month} selected={(monthNowNumberType === month) ? true : false}>
 								{moment().month(month - 1).format("MMMM")}
 							</option>
 						);
@@ -163,7 +165,7 @@ const MyAppsUserPage: React.FC = () => {
 				<select defaultValue={yearNow} onChange={selectChangeYear}>
 					{uniqeYears.map((year: number) => {
 						return (
-							<option key={Math.random()} value={year}>{year}</option>
+							<option key={Math.random()} value={year} selected={(yearNowNumberType === year) ? true : false}>{year}</option>
 						);
 					})}
 				</select>

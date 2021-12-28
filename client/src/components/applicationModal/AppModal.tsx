@@ -59,14 +59,14 @@ export const AppModal: React.FC = () => {
         break;
       case "goods":
         errors.goods =
-          value.length < 8
-            ? "Goods must be at least 8 characters long!"
+          value.length < 5
+            ? "Goods must be at least 5 characters long!"
             : "";
         break;
       case "sendMethod":
         errors.sendMethod =
-          value.length < 4
-            ? "Send method must be at least 4 characters long!"
+          value.length < 2
+            ? "Send method must be at least 2 characters long!"
             : "";
         break;
       case "city":

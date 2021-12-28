@@ -4,7 +4,7 @@ import {validate} from 'class-validator';
 import { getRepository } from 'typeorm'
 import ErrorHandler, {EResponseCodes} from '../utils/ErrorHandler';
 import { Admin } from '../entity/Admin';
-import { IUserRegistrationProps, TCreateAdminTypes } from '../@types/global';
+import { EGeneralType, IUserRegistrationProps, TCreateAdminTypes } from '../@types/global';
 import Telegram from '../../telegram';
 
 const telegraf = new Telegram();
@@ -13,7 +13,7 @@ export default class RegistrationModel {
 	async createUser(args: IUserRegistrationProps) {
 		try{
 			const user = getRepository(User);
-			const candidat: User = await user.findOne({email:args.email})
+			const candidat: User = await user.findOne({email:args.email, status: EGeneralType.ACTIVE})
 			if (candidat) {
 				throw new ErrorHandler(EResponseCodes.REGISTRATIONS_NOT_SUCSSES);
 			}
@@ -31,6 +31,7 @@ export default class RegistrationModel {
 				email: args.email,
 				phoneNumber: args.phoneNumber,
 				password: hashPassword,
+				status: EGeneralType.ACTIVE
 			});
 			const errors = await validate(userObj);
 			if (errors.length === 0) {

@@ -10,6 +10,8 @@ import { IGetAllApp, IGetMyApps } from '../../interface';
 
 const monthNow = (moment().month() + 1).toString();
 const yearNow = moment().year().toString();
+const monthNowNumberType: number = moment().month() + 1;
+const yearNowNumberType: number = moment().year();
 
 declare let confirm: (question: string) => boolean;
 
@@ -145,7 +147,7 @@ const DashboardAdminPage: React.FC = () => {
 				<select defaultValue={monthNow} onChange={selectChangeMonth} >
 					{uniqeMonths.map((month: number) => {
 						return (
-							<option value={month}>
+							<option value={month} selected={(monthNowNumberType === month) ? true : false}>
 								{moment().month(month - 1).format("MMMM")}
 							</option>
 						);
@@ -158,7 +160,7 @@ const DashboardAdminPage: React.FC = () => {
 					{uniqeYears.map((year: number) => {
 						return (
 							<>
-								<option value={year}>{year}</option>
+								<option value={year} selected={(yearNowNumberType === year) ? true : false}>{year}</option>
 							</>
 						);
 					})}

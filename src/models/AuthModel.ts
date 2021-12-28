@@ -2,6 +2,7 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
 import { getRepository } from "typeorm";
+import { EGeneralType } from '../@types/global';
 import { Admin } from '../entity/Admin';
 import { User } from "../entity/User";
 import ErrorHandler, { EResponseCodes } from "../utils/ErrorHandler";
@@ -20,13 +21,13 @@ export default class AuthModel {
 			adminId,
 			phoneNumber
 		}
-		return jwt.sign(payload, process.env.JWT_SECRET_WORD);
+		return jwt.sign(payload, process.env.JWT_SECRET_WORD, {expiresIn: '1y'});
 	};
 
 	async authUser(args) {
 		try {
 			const userRepository = getRepository(User);
-			const user = await userRepository.findOne({email: args.email});
+			const user = await userRepository.findOne({email: args.email, status: EGeneralType.ACTIVE});
 			if (!user) {
 				throw new ErrorHandler(EResponseCodes.AUTH_ERROR);
 			}

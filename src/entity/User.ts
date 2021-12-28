@@ -39,7 +39,13 @@ export class User{
         nullable: true,
         type: 'bigint'
     })
-    botId: number
+    botId: number;
+
+    @Column({
+        nullable: true,
+        type: 'bigint'
+    })
+    status: number;
 
     @CreateDateColumn({type: 'timestamp with time zone'})
     createAt?: Date;
