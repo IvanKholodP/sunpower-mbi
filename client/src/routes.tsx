@@ -31,15 +31,15 @@ export const useRouter = (isAuthentication: boolean, isAuthenticatedAdmin: boole
 				<Redirect to='/' />
 			</Switch>
 		)
+	} else {
+		return(
+			<Switch>
+				<Route exact path="/admin" component={AuthAdminPage} />
+				<Route exact path="/registration" component={RegisterUserPage} />
+				<Route exact path="/auth" component={AuthUserPage} />
+				<Redirect to="/auth" />
+			</Switch>
+		)
 	}
-	
-	return(
-		<Switch>
-			<Route exact path="/admin" component={AuthAdminPage} />
-			<Route exact path="/registration" component={RegisterUserPage} />
-			<Route exact path="/auth" component={AuthUserPage} />
-			<Redirect to="/auth" />
-		</Switch>
-	)
 }
 

@@ -12,7 +12,7 @@ export default class AuthModel {
 			userId,
 			email
 		}
-		return jwt.sign(payload, process.env.JWT_SECRET_WORD, { expiresIn: "1h" });
+		return jwt.sign(payload, process.env.JWT_SECRET_WORD, {expiresIn: '1y'});
 	};
 
 	public generateAdminAccessToken = (adminId: number, phoneNumber: number) => {
@@ -20,7 +20,7 @@ export default class AuthModel {
 			adminId,
 			phoneNumber
 		}
-		return jwt.sign(payload, process.env.JWT_SECRET_WORD, { expiresIn: "1h" });
+		return jwt.sign(payload, process.env.JWT_SECRET_WORD);
 	};
 
 	async authUser(args) {
